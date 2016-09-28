@@ -14,6 +14,7 @@ public class InputController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        hitTorch = null;
         rayRange = 3;
         abilityEquipped = 1;
     }
@@ -33,34 +34,29 @@ public class InputController : MonoBehaviour
 
     private void MouseButtonInput(Ray actRay)
     {
-        if (Input.GetMouseButtonDown(0) && abilityEquipped == 1)
+        //If a torch is highlighted a mouse click will delete it otherwise one will be instantiated
+        if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch == null)
         {
-            torchInstantiate.instantiateTorch(actRay, hit, rayRange, this.gameObject);
+            Torch.instantiateT(actRay, hit, rayRange, this.gameObject);
+        }
+        else if(Input.GetMouseButtonDown(0) && abilityEquipped == 1){
+            Torch.removeT(hitTorch);
+            StartCoroutine(WaitOneFrameT(hitTorch));
         }
     }
 
     private bool TorchHighlight()
     {
-        if (Physics.Raycast(actionRay, out hit, rayRange))
-        {
-            if (hit.transform.gameObject.tag == "Torch")
-            {
-                if(hitTorch != null && hit.transform.gameObject != hitTorch){
-                    highlightTorch.torchRemoveHighlight(hitTorch);
-                }
-                hitTorch = hit.transform.gameObject;
-                highlightTorch.torchHighlight(hitTorch);
-                //Outlined/Silhouette Only
-                return true;
-            }
-            else if (hitTorch != null)
-            {
-                highlightTorch.torchRemoveHighlight(hitTorch);
-                hitTorch = null;
-            }
-        }
+        hitTorch = Torch.highlightT(actionRay, rayRange, hitTorch);
 
-        return false;
+        if (hitTorch == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     private void AbilitySwap()
@@ -71,5 +67,12 @@ public class InputController : MonoBehaviour
             rayRange = 3;
             abilityEquipped = 1;
         }
+    }
+
+    //needed because before we destroy a torch we have to wait one frame
+    //this allows OnTriggerExit to be called in a node
+    IEnumerator WaitOneFrameT(GameObject torch){
+        yield return 0;
+        Torch.destroyT(torch);
     }
 }

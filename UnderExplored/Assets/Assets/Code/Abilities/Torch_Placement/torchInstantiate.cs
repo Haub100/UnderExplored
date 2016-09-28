@@ -7,18 +7,6 @@ public class torchInstantiate : MonoBehaviour
 	public static LayerMask mask = 1 << LayerMask.NameToLayer("Wall");
     private static Vector3 torchSize = new Vector3(4f, 2f, 4f);
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public static void instantiateTorch(Ray ray, RaycastHit hit, float range, GameObject character)
     {
 		Debug.Log("instTorch");
@@ -29,5 +17,9 @@ public class torchInstantiate : MonoBehaviour
             placedTorch.transform.localScale = torchSize;
             placedTorch.transform.rotation = Quaternion.FromToRotation(-character.transform.forward, hit.normal) * character.transform.rotation;
         }
+    }
+
+    public static void destroyTorch(RaycastHit hit){
+        
     }
 }

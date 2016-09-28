@@ -1,23 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
-public class LightNode : MonoBehaviour {
+public class LightNode : MonoBehaviour
+{
 
-	public float litPercentage;
-	public bool isLit;
-
-/*
+    public int litPercentage;
+    public bool isLit;
     [SerializeField]
-    List<GameObject> torches_detected; // List of all torches
+    List<Vector3> torches; // List of all torches positions
 
-    [SerializeField]
-    bool conditionsFulfilled; // Are there enough torches to fulfill the conditions set in the inspector?
-*/
     // Use this for initialization
 
-    void Start(){
+    void Start()
+    {
         isLit = false;
-        litPercentage = 0f;
+        litPercentage = 0;
     }
 
     // When a torch enters into the node's detection area or if the torch pops back up again.
@@ -26,7 +25,6 @@ public class LightNode : MonoBehaviour {
         if (col.gameObject.CompareTag("Torch"))
         {
             print("Torch Detected in Node Area");
-            //torches_detected.Add(col.gameObject); // add the torch to the list of detected torches
             litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
         }
     }
@@ -38,7 +36,7 @@ public class LightNode : MonoBehaviour {
         if (col.gameObject.CompareTag("Torch"))
         {
             print("Torch Removed From Node Area");
-            //torches_detected.Remove(col.gameObject); // add the torch to the list of detected torches
+            litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
         }
     }
 
@@ -48,10 +46,10 @@ public class LightNode : MonoBehaviour {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void conditionsCheck()
     {
-        if (litPercentage > 1)
+        if (litPercentage >= 100)
             isLit = true;
         else
-            isLit = false;;
+            isLit = false; ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,59 +57,83 @@ public class LightNode : MonoBehaviour {
     //          Adds to the litPercentage
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void litPercentageIncrease(Vector3 torchLocation){
+    public void litPercentageIncrease(Vector3 torchLocation)
+    {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
-        
-        if(distance <= 3){
-            litPercentage += 1f;
-        } else if (3 < distance && distance <= 5){
-            litPercentage += 0.5f;
-        } else{
-            litPercentage += 0.35f;
+
+        if (distance <= 3)
+        {
+            litPercentage += 100;
+        }
+        else if (3 < distance && distance <= 5)
+        {
+            litPercentage += 50;
+        }
+        else
+        {
+            litPercentage += 35;
         }
 
         conditionsCheck();
     }
 
     // overload in case we want to add lighting boost modifiers
-    public void litPercentageIncrease(Vector3 torchLocation, float modifier){
+    public void litPercentageIncrease(Vector3 torchLocation, int modifier)
+    {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
-        
-        if(distance <= 3){
-            litPercentage += 1f;
-        } else if (3 < distance && distance <= 5){
-            litPercentage += 0.5f;
-        } else{
-            litPercentage += 0.35f;
+
+        if (distance <= 3)
+        {
+            litPercentage += 100;
+        }
+        else if (3 < distance && distance <= 5)
+        {
+            litPercentage += 50;
+        }
+        else
+        {
+            litPercentage += 35;
         }
 
         litPercentage += modifier;
         conditionsCheck();
     }
 
-    public void litPercentageDecrease(Vector3 torchLocation){
+    public void litPercentageDecrease(Vector3 torchLocation)
+    {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
-        
-        if(distance <= 3){
-            litPercentage -= 1f;
-        } else if (3 < distance && distance <= 5){
-            litPercentage -= 0.5f;
-        } else{
-            litPercentage -= 0.35f;
+
+        if (distance <= 3)
+        {
+            litPercentage -= 100;
+        }
+        else if (3 < distance && distance <= 5)
+        {
+            litPercentage -= 50;
+        }
+        else
+        {
+            litPercentage -= 35;
         }
         conditionsCheck();
     }
 
     // overload in case we want to add lighting boost modifiers
-    public void litPercentageDecrease(Vector3 torchLocation, float modifier){
+    public void litPercentageDecrease(Vector3 torchLocation, int modifier)
+    {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
-        
-        if(distance <= 3){
-            litPercentage -= 1f;
-        } else if (3 < distance && distance <= 5){
-            litPercentage -= 0.5f;
-        } else{
-            litPercentage -= 0.35f;
+
+        if (distance <= 3)
+        {
+            litPercentage -= 100;
+        }
+        else if (3 < distance && distance <= 5)
+        {
+            litPercentage -= 50;
+        }
+        else
+        {
+            litPercentage -= 35;
         }
 
         litPercentage -= modifier;

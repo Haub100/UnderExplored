@@ -4,7 +4,6 @@ using System.Collections;
 public class highlightTorch : MonoBehaviour {
 
 	static GameObject silhouetteShaderHolder = (GameObject)Resources.Load("SilhouetteShaderHolder", typeof(GameObject));
-	private int hello;
 	static GameObject normalTorchShaderHolder = (GameObject)Resources.Load("NormalTorchShaderHolder", typeof(GameObject));
 
 	// Use this for initialization
