@@ -10,6 +10,9 @@ public class InputController : MonoBehaviour
     private Ray actionRay;
     private RaycastHit hit;
     private GameObject hitTorch;
+    private static GameObject torchModel;
+    public LayerMask wallMask;
+    private Vector3 torchSize = new Vector3(4f, 2f, 4f);
 
     // Use this for initialization
     void Start()
@@ -17,6 +20,8 @@ public class InputController : MonoBehaviour
         hitTorch = null;
         rayRange = 3;
         abilityEquipped = 1;
+        wallMask = 1 << LayerMask.NameToLayer("Wall");
+        torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
     }
 
     // Update is called once per frame
@@ -37,11 +42,21 @@ public class InputController : MonoBehaviour
         //If a torch is highlighted a mouse click will delete it otherwise one will be instantiated
         if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch == null)
         {
-            Torch.instantiateT(actRay, hit, rayRange, this.gameObject);
+            instantiateTorch();
         }
-        else if(Input.GetMouseButtonDown(0) && abilityEquipped == 1){
-            Torch.removeT(hitTorch);
-            StartCoroutine(WaitOneFrameT(hitTorch));
+        else if (Input.GetMouseButtonDown(0) && abilityEquipped == 1)
+        {
+            hitTorch.GetComponent<Torch>().destroyT();
+        }
+    }
+
+    private void instantiateTorch()
+    {
+        if (Physics.Raycast(actionRay, out hit, rayRange, wallMask))
+        {
+            GameObject placedTorch = Instantiate(torchModel, hit.point, Quaternion.identity) as GameObject;
+            placedTorch.transform.localScale = torchSize;
+            placedTorch.transform.rotation = Quaternion.FromToRotation(-this.transform.forward, hit.normal) * this.transform.rotation;
         }
     }
 
@@ -67,12 +82,5 @@ public class InputController : MonoBehaviour
             rayRange = 3;
             abilityEquipped = 1;
         }
-    }
-
-    //needed because before we destroy a torch we have to wait one frame
-    //this allows OnTriggerExit to be called in a node
-    IEnumerator WaitOneFrameT(GameObject torch){
-        yield return 0;
-        Torch.destroyT(torch);
     }
 }

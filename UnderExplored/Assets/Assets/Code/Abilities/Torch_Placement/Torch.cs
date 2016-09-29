@@ -1,35 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Torch : MonoBehaviour
 {
-    private static GameObject torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
-    private static GameObject silhouetteShaderHolder = (GameObject)Resources.Load("SilhouetteShaderHolder", typeof(GameObject));
-    private static GameObject normalTorchShaderHolder = (GameObject)Resources.Load("NormalTorchShaderHolder", typeof(GameObject));
-    public static LayerMask mask = 1 << LayerMask.NameToLayer("Wall");
-    private static Vector3 torchSize = new Vector3(4f, 2f, 4f);
-	public static Torch instance;
-	
-    public static void instantiateT(Ray ray, RaycastHit hit, float range, GameObject character)
+
+    private static GameObject silhouetteShaderHolder;
+    private static GameObject normalTorchShaderHolder;
+
+    [SerializeField]
+    List<GameObject> nodes; // List of all nodes the torch affects
+
+    void Awake(){
+        silhouetteShaderHolder = (GameObject)Resources.Load("SilhouetteShaderHolder", typeof(GameObject));
+        normalTorchShaderHolder = (GameObject)Resources.Load("NormalTorchShaderHolder", typeof(GameObject));
+        
+    }
+
+    public void destroyT()
     {
-        Debug.Log("instTorch");
-        if (Physics.Raycast(ray, out hit, range, mask))
-        {
-            Debug.Log("Got Here");
-            GameObject placedTorch = Instantiate(torchModel, hit.point, Quaternion.identity) as GameObject;
-            placedTorch.transform.localScale = torchSize;
-            placedTorch.transform.rotation = Quaternion.FromToRotation(-character.transform.forward, hit.normal) * character.transform.rotation;
+        if(nodes.Count > 0){
+            foreach(GameObject node in nodes){
+                node.GetComponent<LightNode>().litPercentageDecrease(this.transform.position);
+            }
         }
+        Destroy(this.transform.parent.gameObject);
     }
-
-    public static void removeT(GameObject torch)
-    {
-		torch.transform.parent.gameObject.transform.position = new Vector3(1000f,1000f,1000f);
-    }
-
-	public static void destroyT(GameObject torch){
-		Destroy(torch.transform.parent.gameObject);
-	}
 
     public static GameObject highlightT(Ray actionRay, float rayRange, GameObject hitTorch)
     {
@@ -54,5 +50,14 @@ public class Torch : MonoBehaviour
             }
         }
         return null;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.CompareTag("Node"))
+        {
+            print("Torch In a Node Area trigger");
+            nodes.Add(col.gameObject);
+        }
     }
 }

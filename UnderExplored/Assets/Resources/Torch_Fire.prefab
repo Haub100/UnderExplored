@@ -23,6 +23,7 @@ GameObject:
   - 23: {fileID: 23000010290910868}
   - 95: {fileID: 95000011476788486}
   - 65: {fileID: 65000010632743046}
+  - 114: {fileID: 114000013681228842}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Torch
@@ -168,6 +169,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000013681228842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012561733752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce28c581691d7f4e94762601f8bbff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodes: []
 --- !u!198 &198000012780569976
 ParticleSystem:
   m_ObjectHideFlags: 1
