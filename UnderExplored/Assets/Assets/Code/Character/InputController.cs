@@ -13,6 +13,7 @@ public class InputController : MonoBehaviour
     private static GameObject torchModel;
     public LayerMask wallMask;
     private Vector3 torchSize = new Vector3(4f, 2f, 4f);
+    private int torches;
 
     // Use this for initialization
     void Start()
@@ -29,9 +30,14 @@ public class InputController : MonoBehaviour
     {
         //create ray in center of the Camera
         actionRay = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        torches = GetComponent<Inventory>().getTorches();
 
         //cast highlight ray
-        TorchHighlight();
+        if (abilityEquipped == 1)
+        {
+            TorchHighlight();
+        }
+
 
         //check for mouse input
         MouseButtonInput(actionRay);
@@ -40,24 +46,30 @@ public class InputController : MonoBehaviour
     private void MouseButtonInput(Ray actRay)
     {
         //If a torch is highlighted a mouse click will delete it otherwise one will be instantiated
-        if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch == null)
+        if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch == null && torches > 0)
         {
-            instantiateTorch();
+            if (instantiateTorch())
+            {
+                this.GetComponent<Inventory>().removeTorches(1);
+            }
         }
-        else if (Input.GetMouseButtonDown(0) && abilityEquipped == 1)
+        else if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch != null)
         {
+            this.GetComponent<Inventory>().addTorches(1);
             hitTorch.GetComponent<Torch>().destroyT();
         }
     }
 
-    private void instantiateTorch()
+    private bool instantiateTorch()
     {
         if (Physics.Raycast(actionRay, out hit, rayRange, wallMask))
         {
             GameObject placedTorch = Instantiate(torchModel, hit.point, Quaternion.identity) as GameObject;
             placedTorch.transform.localScale = torchSize;
             placedTorch.transform.rotation = Quaternion.FromToRotation(-this.transform.forward, hit.normal) * this.transform.rotation;
+            return true;
         }
+        return false;
     }
 
     private bool TorchHighlight()
