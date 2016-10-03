@@ -10,8 +10,8 @@ public class Inventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Torches = 5;
-		TorchCapacity = 5;
+		Torches = 9;
+		TorchCapacity = 9;
 		TorchUIText.GetComponent<Text>().text = Torches.ToString();
 	}
 	

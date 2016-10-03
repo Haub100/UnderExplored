@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class LightNode : MonoBehaviour
 {
 
     public int litPercentage;
     public bool isLit;
-    [SerializeField]
-    List<Vector3> torches; // List of all torches positions
+
+    private float closeDistance;
+    private float mediumDistance;
 
     // Use this for initialization
 
@@ -17,6 +17,7 @@ public class LightNode : MonoBehaviour
     {
         isLit = false;
         litPercentage = 0;
+        closeDistance = 30;
     }
 
     // When a torch enters into the node's detection area or if the torch pops back up again.
@@ -61,7 +62,7 @@ public class LightNode : MonoBehaviour
     {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
 
-        if (distance <= 3)
+        if (distance <= closeDistance)
         {
             litPercentage += 100;
         }
@@ -82,7 +83,7 @@ public class LightNode : MonoBehaviour
     {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
 
-        if (distance <= 3)
+        if (distance <= closeDistance)
         {
             litPercentage += 100;
         }
@@ -103,7 +104,7 @@ public class LightNode : MonoBehaviour
     {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
 
-        if (distance <= 3)
+        if (distance <= closeDistance)
         {
             litPercentage -= 100;
         }
@@ -123,7 +124,7 @@ public class LightNode : MonoBehaviour
     {
         float distance = Vector3.Distance(this.transform.position, torchLocation);
 
-        if (distance <= 3)
+        if (distance <= closeDistance)
         {
             litPercentage -= 100;
         }

@@ -33,7 +33,11 @@ public class InputController : MonoBehaviour
         torches = GetComponent<Inventory>().getTorches();
 
         //cast highlight ray
-        TorchHighlight();
+        if (abilityEquipped == 1)
+        {
+            TorchHighlight();
+        }
+
 
         //check for mouse input
         MouseButtonInput(actionRay);

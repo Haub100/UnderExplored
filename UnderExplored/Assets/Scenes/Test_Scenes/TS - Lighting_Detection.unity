@@ -292,6 +292,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+--- !u!1 &63095737 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000012073666650, guid: 13e3a4fe560afc946bc6661eb42fde24,
+    type: 2}
+  m_PrefabInternal: {fileID: 260835017}
 --- !u!1001 &260835017
 Prefab:
   m_ObjectHideFlags: 0
@@ -594,6 +599,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!1 &709148727 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011716261500, guid: 3609af5f88b51e948944f455e8a104eb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1640161688}
+--- !u!114 &709148732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709148727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b719a5e194c7ff149bbd9fc35555d9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TorchUIText: {fileID: 63095737}
 --- !u!1001 &754037227
 Prefab:
   m_ObjectHideFlags: 0
@@ -641,6 +663,18 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000012877125802, guid: ba4ec7158edb0864ea61813a87ebe62a,
     type: 2}
   m_PrefabInternal: {fileID: 754037227}
+--- !u!114 &836028988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 836028987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717c8105592b361479aedf1455065877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Nodes: []
 --- !u!4 &1110289985 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000010603006658, guid: 3609af5f88b51e948944f455e8a104eb,
