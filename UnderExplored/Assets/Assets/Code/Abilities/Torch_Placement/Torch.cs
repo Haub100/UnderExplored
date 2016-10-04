@@ -56,7 +56,6 @@ public class Torch : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Node"))
         {
-            print("Torch In a Node Area trigger");
             nodes.Add(col.gameObject);
         }
     }
