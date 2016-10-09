@@ -24,7 +24,7 @@ GameObject:
   - 23: {fileID: 23000011998871416}
   - 114: {fileID: 114000013820182720}
   m_Layer: 0
-  m_Name: LightingNode_MediumSphere
+  m_Name: OBSOLETE_NODE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e621bc4453c39ff41befe264f5c1b67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conditions: 0
+  torchesNeeded: 0
   torches_detected: []
   conditionsFulfilled: 0
 --- !u!135 &135000010719034150
