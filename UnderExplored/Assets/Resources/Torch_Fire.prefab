@@ -25,7 +25,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012561733752
 GameObject:
@@ -209,7 +209,7 @@ Light:
   serializedVersion: 7
   m_Type: 2
   m_Color: {r: 0.8862745, g: 0.34509805, b: 0.13333334, a: 1}
-  m_Intensity: 4.98
+  m_Intensity: 2.07
   m_Range: 12.196047
   m_SpotAngle: 30
   m_CookieSize: 10

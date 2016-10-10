@@ -17,7 +17,9 @@ public class Inventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Torches == 0){
+			Debug.Log("here");
+		}
 	}
 
 	public int getTorches(){
