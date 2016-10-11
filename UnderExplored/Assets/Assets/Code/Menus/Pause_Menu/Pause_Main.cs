@@ -4,12 +4,14 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Pause_Main : MonoBehaviour {
 
-	public GameObject GameManager;
+	private GameObject GameManager;
 	//public Transform canvas;
-	public Transform Player;
+	private GameObject Player;
 
 	// Use this for initialization
 	void Start () {
+		GameManager = GameObject.Find("GameManager");
+		Player = GameObject.Find("Player");
 	}
 	
 	// Update is called once per frame

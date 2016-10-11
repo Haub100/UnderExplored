@@ -17,6 +17,7 @@ public class Torch : MonoBehaviour
         
     }
 
+    // When the torch is detroyed it first subtracts its lit percentage from each node it affects based on its position relative to the node
     public void destroyT()
     {
         if(nodes.Count > 0){
@@ -27,6 +28,7 @@ public class Torch : MonoBehaviour
         Destroy(this.transform.parent.gameObject);
     }
 
+    // Static method that highlights a torch when actionRay is directed at it
     public static GameObject highlightT(Ray actionRay, float rayRange, GameObject hitTorch)
     {
         RaycastHit hit;

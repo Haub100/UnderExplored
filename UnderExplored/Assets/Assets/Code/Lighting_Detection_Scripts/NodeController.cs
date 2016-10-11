@@ -6,6 +6,8 @@ public class NodeController : MonoBehaviour {
 
 	public List<GameObject> Nodes;
 	Animator animator;
+	private bool isFullyLit;
+	private int litCount;
 
 	// Use this for initialization
 	void Start () {
@@ -17,25 +19,32 @@ public class NodeController : MonoBehaviour {
 		CheckNodes();
 	}
 
+	public bool getIsFullyLit(){
+		return isFullyLit;
+	}
+	public int getLitCount(){
+		return litCount;
+	}
+
 	private bool CheckNodes(){
 		int count = 0;
 		foreach (GameObject node in Nodes){
 			if(node.GetComponent<LightNode>().isLit){
-				Debug.Log(Nodes.Count);
 				count += 1;
 			}
 		}
 
 		if (count == Nodes.Count){
-			
-			Debug.Log("Happening");
 			animator.SetBool("isOpen", true);
+			isFullyLit = true;
+			litCount = count;
 			return true;
 		}
 		else{
 			animator.SetBool("isOpen", false);
+			isFullyLit = false;
 		}
-
+		litCount = count;
 		return false;
 	}
 }

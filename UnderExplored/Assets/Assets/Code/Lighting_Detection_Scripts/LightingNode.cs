@@ -17,8 +17,8 @@ public class LightingNode : MonoBehaviour
     [SerializeField]
     List<GameObject> torches_detected; // List of all torches
 
-    [SerializeField]
-    bool conditionsFulfilled; // Are there enough torches to fulfill the conditions set in the inspector?
+    //[SerializeField]
+    //bool conditionsFulfilled; // Are there enough torches to fulfill the conditions set in the inspector?
 
     // Use this for initialization
     void Start()
@@ -30,7 +30,7 @@ public class LightingNode : MonoBehaviour
     void Update()
     {
         removeInactiveObjects(); // remove any objects that have deactivated during gameplay for any reason.
-        conditionsFulfilled = conditionsCheck(); // check and verify conditions
+        //conditionsFulfilled = conditionsCheck(); // check and verify conditions
 
     }
 
