@@ -26,6 +26,12 @@ public class Inventory : MonoBehaviour {
 	public int getTorches(){
 		return Torches;
 	}
+	public bool isFull(){
+		if(TorchCapacity == Torches){
+			return true;
+		}
+		return false;
+	}
 
 	public int addTorches(int torchesAdded){
 		if(Torches < TorchCapacity){
@@ -53,5 +59,9 @@ public class Inventory : MonoBehaviour {
 		}
 		TorchCount.GetComponent<Text>().text = Torches.ToString();
 		return Torches;
+	}
+
+	public int torchesNeeded(){
+		return (TorchCapacity - Torches);
 	}
 }
