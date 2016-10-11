@@ -35,8 +35,6 @@ public class ProgressionIndicator : MonoBehaviour {
 		double dotsToLight = Math.Round(dotsDouble, 0, MidpointRounding.AwayFromZero);
 		int dotLight = (int) dotsToLight;
 
-		Debug.Log(dotLight);
-
 		int i = 0;
 		if(dotLight > 0){
 			while(i < dotLight){

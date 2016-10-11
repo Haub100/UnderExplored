@@ -6,13 +6,14 @@ public class Inventory : MonoBehaviour {
 
 	private int Torches;
 	private int TorchCapacity;
-	public GameObject TorchUIText;
+	private GameObject TorchCount;
 
 	// Use this for initialization
 	void Start () {
 		Torches = 9;
 		TorchCapacity = 9;
-		TorchUIText.GetComponent<Text>().text = Torches.ToString();
+		TorchCount = GameObject.Find("TorchCount");
+		TorchCount.GetComponent<Text>().text = Torches.ToString();
 	}
 	
 	// Update is called once per frame
@@ -36,7 +37,7 @@ public class Inventory : MonoBehaviour {
 		else{
 			//torches is at maximum capacity
 		}
-		TorchUIText.GetComponent<Text>().text = Torches.ToString();
+		TorchCount.GetComponent<Text>().text = Torches.ToString();
 		return Torches;		
 	}
 
@@ -50,7 +51,7 @@ public class Inventory : MonoBehaviour {
 		else{
 			//torches already zero torches
 		}
-		TorchUIText.GetComponent<Text>().text = Torches.ToString();
+		TorchCount.GetComponent<Text>().text = Torches.ToString();
 		return Torches;
 	}
 }

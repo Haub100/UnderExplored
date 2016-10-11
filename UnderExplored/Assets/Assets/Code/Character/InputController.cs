@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -12,8 +13,14 @@ public class InputController : MonoBehaviour
     private GameObject hitTorch;
     private static GameObject torchModel;
     public LayerMask wallMask;
+    private LayerMask actionItems;
     private Vector3 torchSize = new Vector3(4f, 2f, 4f);
     private int torches;
+
+    //Variables for UI interaction
+    private Text actionUIText;
+    private GameObject actionIcon;
+    private string actionString;
 
     // Use this for initialization
     void Start()
@@ -22,7 +29,14 @@ public class InputController : MonoBehaviour
         rayRange = 3;
         abilityEquipped = 1;
         wallMask = 1 << LayerMask.NameToLayer("Wall");
+        actionItems = 1 << LayerMask.NameToLayer("Action_Items");
         torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
+        actionString = "Press 'E'";
+        GameObject textOBJ = GameObject.Find("Interact Text");
+        actionUIText = textOBJ.GetComponent<Text>();
+        actionUIText.text = "";
+        actionIcon = GameObject.Find("Interact Icon");
+        actionIcon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,6 +52,8 @@ public class InputController : MonoBehaviour
             TorchHighlight();
         }
 
+        //E-button Raycast
+        eButton();
 
         //check for mouse input
         MouseButtonInput(actionRay);
@@ -83,6 +99,20 @@ public class InputController : MonoBehaviour
         else
         {
             return true;
+        }
+    }
+
+    private void eButton()
+    {
+        if (Physics.Raycast(actionRay, out hit, rayRange, actionItems))
+        {
+            actionUIText.text = actionString;
+            actionIcon.SetActive(true);
+        }
+        else
+        {
+            actionUIText.text = "";
+            actionIcon.SetActive(false);
         }
     }
 
