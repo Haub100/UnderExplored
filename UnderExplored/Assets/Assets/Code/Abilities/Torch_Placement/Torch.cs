@@ -11,17 +11,20 @@ public class Torch : MonoBehaviour
     [SerializeField]
     List<GameObject> nodes; // List of all nodes the torch affects
 
-    void Awake(){
+    void Awake()
+    {
         silhouetteShaderHolder = (GameObject)Resources.Load("SilhouetteShaderHolder", typeof(GameObject));
         normalTorchShaderHolder = (GameObject)Resources.Load("NormalTorchShaderHolder", typeof(GameObject));
-        
+
     }
 
     // When the torch is detroyed it first subtracts its lit percentage from each node it affects based on its position relative to the node
     public void destroyT()
     {
-        if(nodes.Count > 0){
-            foreach(GameObject node in nodes){
+        if (nodes.Count > 0)
+        {
+            foreach (GameObject node in nodes)
+            {
                 node.GetComponent<LightNode>().litPercentageDecrease(this.transform.position);
             }
         }
@@ -35,7 +38,7 @@ public class Torch : MonoBehaviour
 
         if (Physics.Raycast(actionRay, out hit, rayRange))
         {
-            if (hit.transform.gameObject.tag == "Torch")
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("LightSource"))
             {
                 if (hitTorch != null && hit.transform.gameObject != hitTorch)
                 {

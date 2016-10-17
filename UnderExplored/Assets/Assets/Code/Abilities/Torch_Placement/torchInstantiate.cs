@@ -18,8 +18,4 @@ public class torchInstantiate : MonoBehaviour
             placedTorch.transform.rotation = Quaternion.FromToRotation(-character.transform.forward, hit.normal) * character.transform.rotation;
         }
     }
-
-    public static void destroyTorch(RaycastHit hit){
-        
-    }
 }

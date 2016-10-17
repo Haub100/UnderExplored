@@ -23,9 +23,9 @@ public class LightNode : MonoBehaviour
     // When a torch enters into the node's detection area or if the torch pops back up again.
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Torch"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
-            print("Torch Detected in Node Area");
+            print("LightSource Detected in Node Area");
             litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
         }
     }
@@ -34,9 +34,9 @@ public class LightNode : MonoBehaviour
     // Issue: If the torch is setInactive it won't be removed.
     void OnTriggerExit(Collider col)
     {
-        if (col.gameObject.CompareTag("Torch"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
-            print("Torch Removed From Node Area");
+            print("LightSource Removed From Node Area");
             litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
         }
     }

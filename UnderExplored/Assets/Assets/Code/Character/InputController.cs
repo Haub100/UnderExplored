@@ -4,17 +4,23 @@ using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
-
+    //Public Variables
     public Camera mainCamera;
+    public LayerMask wallMask;
     public float rayRange;
     public int abilityEquipped;
+
+    //Private Variables
+    private static GameObject torchModel;
+    private GameObject hitTorch;
+    private LayerMask actionItems; //all objects that can be used with the action 'E' key
     private Ray actionRay;
     private RaycastHit hit;
-    private GameObject hitTorch;
-    private static GameObject torchModel;
-    public LayerMask wallMask;
-    private LayerMask actionItems;
     private Vector3 torchSize = new Vector3(4f, 2f, 4f);
+    private Vector3 instantiateLocation; //the location a spell is instantiated
+    private Vector3 instantateDirection; //the direction a spell travels when cast
+    private bool isCharging = false; //used for charging abilities
+    private float force; //used for casting spells a specific distance
     private int torches;
 
     //Variables for UI interaction
@@ -25,6 +31,7 @@ public class InputController : MonoBehaviour
     private string actionString;
     private bool inPopCoroutine = false;
 
+
     // Use this for initialization
     void Start()
     {
@@ -34,6 +41,7 @@ public class InputController : MonoBehaviour
         wallMask = 1 << LayerMask.NameToLayer("Wall");
         actionItems = 1 << LayerMask.NameToLayer("Action_Items");
         torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
+        force = 0f;
 
         //UI assignments
         actionString = "Press 'E'";
@@ -51,6 +59,10 @@ public class InputController : MonoBehaviour
         //create ray in center of the Camera
         actionRay = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         torches = GetComponent<Inventory>().getTorches();
+        //instantateLocation in the center of the Camera
+        instantiateLocation = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 1f));
+        //instantiateDirection where the camera is facing
+        instantateDirection = mainCamera.transform.forward;
 
         //cast highlight ray
         if (abilityEquipped == 1)
@@ -62,31 +74,69 @@ public class InputController : MonoBehaviour
         eButton();
 
         //check for mouse input
-        MouseButtonInput(actionRay);
+        MouseButtonInput();
+
+        //check for AbilitySwap
+        AbilitySwap();
     }
 
-    private void MouseButtonInput(Ray actRay)
+    private void MouseButtonInput()
     {
+
         //If a torch is highlighted a mouse click will delete it otherwise one will be instantiated
-        if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch == null && torches > 0)
+        if (abilityEquipped == 1)
         {
-            if (instantiateTorch())
+            if (Input.GetMouseButtonDown(0) && hitTorch == null && torches > 0)
             {
-                this.GetComponent<Inventory>().removeTorches(1);
+                if (instantiateTorch())
+                {
+                    this.GetComponent<Inventory>().removeTorches(1);
+                }
+            }
+            else if (Input.GetMouseButtonDown(0) && hitTorch != null)
+            {
+                if (!this.GetComponent<Inventory>().isFull())
+                {
+                    this.GetComponent<Inventory>().addTorches(1);
+                    hitTorch.GetComponent<Torch>().destroyT();
+                }
+                else if (!inPopCoroutine)
+                {
+                    StartCoroutine(popText("INVETORY FULL"));
+                }
             }
         }
-        else if (Input.GetMouseButtonDown(0) && abilityEquipped == 1 && hitTorch != null)
+
+        //If ability 2 is equipped it will spawn a light orb based with a distance based on a charge
+        if (abilityEquipped == 2)
         {
-            if (!this.GetComponent<Inventory>().isFull())
+            //Starts the charging process
+            if (Input.GetMouseButtonDown(0))
             {
-                this.GetComponent<Inventory>().addTorches(1);
-                hitTorch.GetComponent<Torch>().destroyT();
+                isCharging = true;
             }
-            else if (!inPopCoroutine)
+            else if (Input.GetMouseButton(0) && isCharging == true) //If the player hasn't cancelled the charge this code runs and charges the orb spell
             {
-                StartCoroutine(popText("INVETORY FULL"));
+                if(force < 3f){
+                    force += Time.deltaTime;
+                }
+                else{
+                    force = 3f;
+                }
+            }
+            else if (Input.GetMouseButtonUp(0) && isCharging == true) //Casts orb spell if the player hasn't cancelled
+            {
+                orbInstantiate.instantiateOrb(instantiateLocation, instantateDirection, force);
+                force = 0f;
+            }
+
+            //Cancels the charging process
+            if(Input.GetMouseButtonDown(1)){
+                isCharging = false;
+                force = 0f;
             }
         }
+
     }
 
     private bool instantiateTorch()
@@ -165,6 +215,10 @@ public class InputController : MonoBehaviour
             abilityEquipped = 1;
             rayRange = 3;
             abilityEquipped = 1;
+        }
+        else if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            abilityEquipped = 2;
         }
     }
 
