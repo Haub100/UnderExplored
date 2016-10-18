@@ -36,9 +36,9 @@ public class Torch : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(actionRay, out hit, rayRange))
+        if (Physics.Raycast(actionRay, out hit, rayRange, 1 << LayerMask.NameToLayer("LightSource")))
         {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("LightSource"))
+            if (hit.transform.gameObject.tag == "Torch")
             {
                 if (hitTorch != null && hit.transform.gameObject != hitTorch)
                 {
@@ -54,6 +54,11 @@ public class Torch : MonoBehaviour
                 hitTorch = null;
             }
         }
+        else if (hitTorch != null)
+        {
+            hitTorch.GetComponent<Renderer>().material.shader = normalTorchShaderHolder.GetComponent<Renderer>().sharedMaterial.shader;
+            hitTorch = null;
+        }
         return null;
     }
 
@@ -62,6 +67,7 @@ public class Torch : MonoBehaviour
         if (col.gameObject.CompareTag("Node"))
         {
             nodes.Add(col.gameObject);
+            col.gameObject.GetComponent<LightNode>().litPercentageIncrease(this.transform.position);
         }
     }
 }

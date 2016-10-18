@@ -12,6 +12,7 @@ public class orbInstantiate : MonoBehaviour
 
         Debug.Log("Got Here");
         GameObject orb = Instantiate(orbModel, location, Quaternion.identity) as GameObject;
-		orb.GetComponent<Rigidbody>().MovePosition(orb.transform.position + direction);
+        //orb.GetComponent<Orb>().setLifeTime(5f);
+		orb.GetComponent<Rigidbody>().AddForce(direction * force);
     }
 }

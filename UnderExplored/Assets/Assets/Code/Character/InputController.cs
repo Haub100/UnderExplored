@@ -11,23 +11,37 @@ public class InputController : MonoBehaviour
     public int abilityEquipped;
 
     //Private Variables
-    private static GameObject torchModel;
-    private GameObject hitTorch;
+    private static GameObject torchModel; //torch model to be instantiated
+    private GameObject hitTorch; //torch that is highlighted if no highlight it is null
     private LayerMask actionItems; //all objects that can be used with the action 'E' key
-    private Ray actionRay;
+    private Ray actionRay; //Ray that comes out from the middle of the player camera
     private RaycastHit hit;
     private Vector3 torchSize = new Vector3(4f, 2f, 4f);
     private Vector3 instantiateLocation; //the location a spell is instantiated
     private Vector3 instantateDirection; //the direction a spell travels when cast
     private bool isCharging = false; //used for charging abilities
+    private bool inCooldown = false;
     private float force; //used for casting spells a specific distance
     private int torches;
+    private float countdown; //countdown timer used for UI cooldowns
 
     //Variables for UI interaction
     private Text actionUIText;
     private Text infoUIText;
     private Text popUpText;
+    private Text OrbTimerText;
+    private GameObject CrosshairUI;
+    private GameObject OrbReticleUI;
+    private GameObject GreenZoneUI;
     private GameObject actionIcon;
+    private GameObject TorchUI;
+    private GameObject OrbUI;
+    private GameObject OrbTimer;
+    private Sprite OrbUISprite;
+    private Sprite OrbUISelectedSprite;
+    private Sprite OrbUIGreyscaleSprite;
+    private Sprite TorchUISprite;
+    private Sprite TorchUISelectedSprite;
     private string actionString;
     private bool inPopCoroutine = false;
 
@@ -41,16 +55,33 @@ public class InputController : MonoBehaviour
         wallMask = 1 << LayerMask.NameToLayer("Wall");
         actionItems = 1 << LayerMask.NameToLayer("Action_Items");
         torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
-        force = 0f;
+        force = 600;
 
         //UI assignments
         actionString = "Press 'E'";
         actionUIText = GameObject.Find("Interact Text").GetComponent<Text>();
         infoUIText = GameObject.Find("InfoText").GetComponent<Text>();
         popUpText = GameObject.Find("PopUpText").GetComponent<Text>();
+        OrbTimerText = GameObject.Find("OrbTimer").GetComponent<Text>();
+        TorchUI = GameObject.Find("TorchUI");
+        OrbUI = GameObject.Find("OrbUI");
+        OrbTimer = GameObject.Find("OrbTimer");
+        CrosshairUI = GameObject.Find("Crosshair");
+        OrbReticleUI = GameObject.Find("OrbReticle");
+        GreenZoneUI = GameObject.Find("GreenZoneUI");
+        OrbUISprite = (Sprite)Resources.Load("Textures/OrbUI", typeof(Sprite));
+        OrbUISelectedSprite = (Sprite)Resources.Load("Textures/OrbUISelected", typeof(Sprite));
+        OrbUIGreyscaleSprite = (Sprite)Resources.Load("Textures/OrbUIGrey", typeof(Sprite));
+        TorchUISprite = (Sprite)Resources.Load("Textures/TorchUI", typeof(Sprite));
+        TorchUISelectedSprite = (Sprite)Resources.Load("Textures/TorchUISelected", typeof(Sprite));
+        TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
+        OrbUI.GetComponent<Image>().sprite = OrbUISprite;
+        OrbReticleUI.SetActive(false);
+        GreenZoneUI.SetActive(false);
         actionUIText.text = "";
         actionIcon = GameObject.Find("Interact Icon");
         actionIcon.SetActive(false);
+        OrbTimer.SetActive(false);
     }
 
     // Update is called once per frame
@@ -72,6 +103,12 @@ public class InputController : MonoBehaviour
 
         //E-button Raycast
         eButton();
+
+        //Cooldown for the orb ability
+        if (inCooldown)
+        {
+            OrbCooldown();
+        }
 
         //check for mouse input
         MouseButtonInput();
@@ -111,29 +148,37 @@ public class InputController : MonoBehaviour
         if (abilityEquipped == 2)
         {
             //Starts the charging process
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !inCooldown)
             {
                 isCharging = true;
+                GreenZoneUI.SetActive(true);
             }
             else if (Input.GetMouseButton(0) && isCharging == true) //If the player hasn't cancelled the charge this code runs and charges the orb spell
             {
-                if(force < 3f){
-                    force += Time.deltaTime;
-                }
-                else{
-                    force = 3f;
-                }
+                float floor = 100f;
+                float ceiling = 500f;
+                float heightWidth = Mathf.PingPong(Time.time * 1000f, ceiling - floor);
+                heightWidth += 100;
+                OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(heightWidth, heightWidth);
             }
             else if (Input.GetMouseButtonUp(0) && isCharging == true) //Casts orb spell if the player hasn't cancelled
             {
                 orbInstantiate.instantiateOrb(instantiateLocation, instantateDirection, force);
-                force = 0f;
+                OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
+                OrbUI.GetComponent<Image>().sprite = OrbUIGreyscaleSprite;
+                GreenZoneUI.SetActive(false);
+                inCooldown = true;
+                isCharging = false;
+                OrbTimer.SetActive(true);
+                countdown = 5f;
             }
 
             //Cancels the charging process
-            if(Input.GetMouseButtonDown(1)){
+            if (Input.GetMouseButtonDown(1))
+            {
                 isCharging = false;
-                force = 0f;
+                GreenZoneUI.SetActive(false);
+                OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
             }
         }
 
@@ -208,6 +253,25 @@ public class InputController : MonoBehaviour
         }
     }
 
+    private void OrbCooldown()
+    {
+        countdown -= Time.deltaTime;
+        if (countdown <= 0)
+        {
+            inCooldown = false;
+            OrbTimer.SetActive(false);
+            if (abilityEquipped == 1)
+            {
+                OrbUI.GetComponent<Image>().sprite = OrbUISprite;
+            }
+            else if (abilityEquipped == 2)
+            {
+                OrbUI.GetComponent<Image>().sprite = OrbUISelectedSprite;
+            }
+        }
+        OrbTimerText.text = Mathf.Round(countdown).ToString();
+    }
+
     private void AbilitySwap()
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
@@ -215,10 +279,20 @@ public class InputController : MonoBehaviour
             abilityEquipped = 1;
             rayRange = 3;
             abilityEquipped = 1;
+            CrosshairUI.SetActive(true);
+            GreenZoneUI.SetActive(false);
+            OrbReticleUI.SetActive(false);
+            TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
+            OrbUI.GetComponent<Image>().sprite = OrbUISprite;
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
             abilityEquipped = 2;
+            CrosshairUI.SetActive(false);
+            TorchUI.GetComponent<Image>().sprite = TorchUISprite;
+            OrbUI.GetComponent<Image>().sprite = OrbUISelectedSprite;
+            OrbReticleUI.SetActive(true);
+            OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
         }
     }
 

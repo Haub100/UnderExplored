@@ -26,7 +26,7 @@ public class LightNode : MonoBehaviour
         if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
             print("LightSource Detected in Node Area");
-            litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
+            //litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
         }
     }
 
@@ -37,7 +37,7 @@ public class LightNode : MonoBehaviour
         if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
             print("LightSource Removed From Node Area");
-            litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
+            //litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
         }
     }
 
@@ -116,6 +116,11 @@ public class LightNode : MonoBehaviour
         {
             litPercentage -= 35;
         }
+
+        if (litPercentage < 0)
+        {
+            litPercentage = 0;
+        }
         conditionsCheck();
     }
 
@@ -136,8 +141,13 @@ public class LightNode : MonoBehaviour
         {
             litPercentage -= 35;
         }
-
+        
         litPercentage -= modifier;
+
+        if (litPercentage < 0)
+        {
+            litPercentage = 0;
+        }
         conditionsCheck();
     }
 }
