@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class LightNode : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class LightNode : MonoBehaviour
 
     private float closeDistance;
     private float mediumDistance;
+    private int ghostSpawnings;
 
     // Use this for initialization
 
@@ -18,6 +18,7 @@ public class LightNode : MonoBehaviour
         isLit = false;
         litPercentage = 0;
         closeDistance = 30;
+        ghostSpawnings = 0;
     }
 
     // When a torch enters into the node's detection area or if the torch pops back up again.
@@ -39,6 +40,13 @@ public class LightNode : MonoBehaviour
             print("LightSource Removed From Node Area");
             //litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
         }
+    }
+
+    public int getGhostSpawnings(){
+        return ghostSpawnings;   
+    }
+    public void incrementGhostSpawnings(){
+        ghostSpawnings += 1;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +149,7 @@ public class LightNode : MonoBehaviour
         {
             litPercentage -= 35;
         }
-        
+
         litPercentage -= modifier;
 
         if (litPercentage < 0)

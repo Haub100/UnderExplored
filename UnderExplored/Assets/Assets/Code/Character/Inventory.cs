@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Torches = 10;
+		Torches = 2;
 		TorchCapacity = 10;
 		TorchCount = GameObject.Find("TorchCount");
 		TorchCount.GetComponent<Text>().text = Torches.ToString()+ "/" + TorchCapacity;
@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Torches == 0){
-			Debug.Log("here");
+			//Debug.Log("here");
 		}
 	}
 

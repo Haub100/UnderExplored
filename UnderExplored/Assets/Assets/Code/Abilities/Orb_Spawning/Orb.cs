@@ -7,12 +7,21 @@ public class Orb : MonoBehaviour
 
     [SerializeField]
     List<GameObject> nodes; // List of all nodes the torch affects
+    private GameObject DoorManager;
+    private GameObject activeDoor;
     private float lifeTime;
     private bool hasSetNodeIncrease;
+    private bool badCast;
+    private bool isForced;
+    private bool ghostsSpawned;
+
 
     // Use this for initialization
     void Start()
     {
+        DoorManager = GameObject.Find("DoorManager");
+        activeDoor = DoorManager.GetComponent<DoorManager>().getActiveDoorFrame();
+        ghostsSpawned = false;
         hasSetNodeIncrease = false;
         Physics.IgnoreLayerCollision(10, 11, true);
         Physics.IgnoreLayerCollision(10, 10, true);
@@ -22,9 +31,17 @@ public class Orb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Waits until the orb comes to a complete stop before adding light percentage to the nodes
-        if (this.gameObject.GetComponent<Rigidbody>().velocity == Vector3.zero && hasSetNodeIncrease == false)
+        if (!ghostsSpawned && badCast)
         {
+            ghostsSpawned = true;
+            activeDoor.GetComponent<EnemyHandler>().spawnGhosts();
+        }
+
+        //Waits until the orb comes to a complete stop before adding light percentage to the nodes
+        if (this.gameObject.GetComponent<Rigidbody>().velocity == Vector3.zero && 
+            this.gameObject.GetComponent<Rigidbody>().isKinematic == false && lifeTime < 5)
+        {
+            //Debug.Log(lifeTime);
             this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         }
 
@@ -47,10 +64,18 @@ public class Orb : MonoBehaviour
             destroyO();
         }
     }
-
     public void setLifeTime(float timeToLive)
     {
         lifeTime = timeToLive;
+    }
+
+    public void isBadCast(bool isBad)
+    {
+        badCast = isBad;
+    }
+    public void setForced(bool forced)
+    {
+        isForced = forced;
     }
 
     // When the torch is detroyed it first subtracts its lit percentage from each node it affects based on its position relative to the node
@@ -85,7 +110,7 @@ public class Orb : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("Wall") && isForced == true)
         {
             this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }

@@ -9,57 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000012877125802}
+  m_RootGameObject: {fileID: 1000011213318520}
   m_IsPrefabParent: 1
---- !u!1 &1000012877125802
+--- !u!1 &1000011213318520
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000013132277714}
-  - 114: {fileID: 114000013928479554}
-  - 114: {fileID: 114000010610042592}
+  - 4: {fileID: 4000012275032504}
+  - 114: {fileID: 114000013320839158}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: DoorManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000013132277714
+--- !u!4 &4000012275032504
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012877125802}
+  m_GameObject: {fileID: 1000011213318520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.510484, y: 2.9894524, z: -1.9456062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000010610042592
+--- !u!114 &114000013320839158
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012877125802}
+  m_GameObject: {fileID: 1000011213318520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709bb46c80855dc409c64fa7aef220b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ef073a587d463c4fb396fc10eaede3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000013928479554
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012877125802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46dcf95e44c1d045a5c39ca5c229b42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  activeDoorFrame: {fileID: 0}

@@ -22,6 +22,7 @@ public class InputController : MonoBehaviour
     private bool isCharging = false; //used for charging abilities
     private bool inCooldown = false;
     private float force; //used for casting spells a specific distance
+    private float heightWidth; //determines the width and the height of the orb reticle
     private int torches;
     private float countdown; //countdown timer used for UI cooldowns
 
@@ -157,13 +158,20 @@ public class InputController : MonoBehaviour
             {
                 float floor = 100f;
                 float ceiling = 500f;
-                float heightWidth = Mathf.PingPong(Time.time * 1000f, ceiling - floor);
+                heightWidth = Mathf.PingPong(Time.time * 1000f, ceiling - floor);
                 heightWidth += 100;
                 OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(heightWidth, heightWidth);
             }
             else if (Input.GetMouseButtonUp(0) && isCharging == true) //Casts orb spell if the player hasn't cancelled
             {
-                orbInstantiate.instantiateOrb(instantiateLocation, instantateDirection, force);
+                bool badcast;
+                if(heightWidth > 400){
+                    badcast = false;
+                }
+                else{
+                    badcast = true;
+                }
+                orbInstantiate.instantiateOrb(instantiateLocation, instantateDirection, force, badcast);
                 OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
                 OrbUI.GetComponent<Image>().sprite = OrbUIGreyscaleSprite;
                 GreenZoneUI.SetActive(false);
