@@ -7,7 +7,7 @@ public class Orb : MonoBehaviour
 
     [SerializeField]
     List<GameObject> nodes; // List of all nodes the torch affects
-    private GameObject DoorManager;
+    private GameObject RoomManager;
     private GameObject activeDoor;
     private float lifeTime;
     private bool hasSetNodeIncrease;
@@ -19,8 +19,8 @@ public class Orb : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        DoorManager = GameObject.Find("DoorManager");
-        activeDoor = DoorManager.GetComponent<DoorManager>().getActiveDoorFrame();
+        RoomManager = GameObject.Find("RoomManager");
+        activeDoor = RoomManager.GetComponent<RoomManager>().getActiveDoorFrame();
         ghostsSpawned = false;
         hasSetNodeIncrease = false;
         Physics.IgnoreLayerCollision(10, 11, true);

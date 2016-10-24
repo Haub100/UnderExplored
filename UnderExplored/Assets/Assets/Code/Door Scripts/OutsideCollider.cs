@@ -4,11 +4,13 @@ using System.Collections;
 public class OutsideCollider : MonoBehaviour
 {
     public GameObject nextDoorFrame; //Can be null
-    private GameObject DoorManager;
+    public GameObject playerBlock;
+    private GameObject RoomManager;
+    private bool isdespawned = false;
     // Use this for initialization
     void Start()
     {
-        DoorManager = GameObject.Find("DoorManager");
+        RoomManager = GameObject.Find("RoomManager");
     }
 
     // Update is called once per frame
@@ -19,11 +21,14 @@ public class OutsideCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player") && !isdespawned)
         {
+            isdespawned = true;
+            RoomManager.GetComponent<RoomManager>().despawnObjects();
+            playerBlock.SetActive(true);
             if (nextDoorFrame != null)
             {
-                DoorManager.GetComponent<DoorManager>().setActiveDoor(nextDoorFrame);
+                RoomManager.GetComponent<RoomManager>().setActiveDoor(nextDoorFrame);
             }
         }
     }
