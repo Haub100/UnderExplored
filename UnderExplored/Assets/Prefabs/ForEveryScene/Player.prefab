@@ -24,6 +24,8 @@ GameObject:
   - 114: {fileID: 114000013999208176}
   - 114: {fileID: 114000010855010424}
   - 114: {fileID: 114000011061677630}
+  - 95: {fileID: 95000011730014338}
+  - 114: {fileID: 114000013859889752}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -71,10 +73,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010030600876}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.57, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 6.25, y: 1.57, z: 1.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: -25.5}
   m_Children:
   - {fileID: 4000010912372186}
   - {fileID: 4000014060312352}
@@ -162,6 +164,23 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010245445362}
   m_Enabled: 1
+--- !u!95 &95000011730014338
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010030600876}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c0daf1ab132d714baa59e2906643d3f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!108 &108000010841296606
 Light:
   m_ObjectHideFlags: 1
@@ -277,6 +296,19 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 114000013999208176}
   StrideInterval: 4
   RunningStrideLengthen: 0.722
+--- !u!114 &114000013859889752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010030600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c120ccca5b4ab14abcea9bd3b682862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
 --- !u!114 &114000013999208176
 MonoBehaviour:
   m_ObjectHideFlags: 1

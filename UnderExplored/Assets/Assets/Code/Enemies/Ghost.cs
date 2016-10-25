@@ -41,4 +41,8 @@ public class Ghost : MonoBehaviour
 			destination = player;
 		}
     }
+
+    public void SetDestination (Transform dest){
+        destination = dest;
+    }
 }

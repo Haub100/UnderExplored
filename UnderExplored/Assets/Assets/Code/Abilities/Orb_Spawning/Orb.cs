@@ -23,8 +23,9 @@ public class Orb : MonoBehaviour
         activeDoor = RoomManager.GetComponent<RoomManager>().getActiveDoorFrame();
         ghostsSpawned = false;
         hasSetNodeIncrease = false;
-        Physics.IgnoreLayerCollision(10, 11, true);
-        Physics.IgnoreLayerCollision(10, 10, true);
+        Physics.IgnoreLayerCollision(10, 11, true); //ignore player Collision
+        Physics.IgnoreLayerCollision(10, 10, true); //ignore collision with itself
+        Physics.IgnoreLayerCollision(10, 13, true); //ignore enemy collision
         lifeTime = 5f;
     }
 
