@@ -40,7 +40,7 @@ GameObject:
   - 95: {fileID: 95000011476788486}
   - 65: {fileID: 65000010632743046}
   - 114: {fileID: 114000013681228842}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Torch
   m_TagString: Torch
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
