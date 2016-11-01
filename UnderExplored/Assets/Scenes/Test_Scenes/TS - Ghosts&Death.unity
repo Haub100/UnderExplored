@@ -241,6 +241,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 95000011730014338, guid: 54b4c632869ac0a48a926619971ef654,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3c0daf1ab132d714baa59e2906643d3f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54b4c632869ac0a48a926619971ef654, type: 2}
   m_IsPrefabParent: 0
@@ -366,11 +371,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4000010421497992, guid: cc39d07e91e2b454abc564c529fb8b12,
     type: 2}
   m_PrefabInternal: {fileID: 863930539}
---- !u!1 &510880554 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000012427794466, guid: 3d5a4778fc6f824429c89faa2f9a0291,
-    type: 2}
-  m_PrefabInternal: {fileID: 835925953}
 --- !u!1 &606006375
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,25 +675,11 @@ Prefab:
       propertyPath: ghostSpawnLocations.Array.data[1]
       value: 
       objectReference: {fileID: 1960280987}
-    - target: {fileID: 114000013365876332, guid: 1a8a3d5e23107684283653d81d824ab7,
-        type: 2}
-      propertyPath: nextDoorFrame
-      value: 
-      objectReference: {fileID: 259174688}
     - target: {fileID: 114000012426923890, guid: 1a8a3d5e23107684283653d81d824ab7,
         type: 2}
       propertyPath: Nodes.Array.data[0]
       value: 
       objectReference: {fileID: 58825941}
-    - target: {fileID: 114000012426923890, guid: 1a8a3d5e23107684283653d81d824ab7,
-        type: 2}
-      propertyPath: Nodes.Array.data[1]
-      value: 
-      objectReference: {fileID: 510880554}
-    - target: {fileID: 1000012611098284, guid: 1a8a3d5e23107684283653d81d824ab7, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a8a3d5e23107684283653d81d824ab7, type: 2}
   m_IsPrefabParent: 0
