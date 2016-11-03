@@ -2108,6 +2108,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000012426923890, guid: 1a8a3d5e23107684283653d81d824ab7,
+        type: 2}
+      propertyPath: Nodes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 114000013365876332, guid: 1a8a3d5e23107684283653d81d824ab7,
         type: 2}
       propertyPath: ghostSpawnLocations.Array.size
