@@ -4839,11 +4839,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010071470574, guid: 54b4c632869ac0a48a926619971ef654, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.8
+      value: 12.02
       objectReference: {fileID: 0}
     - target: {fileID: 4000010071470574, guid: 54b4c632869ac0a48a926619971ef654, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 24.07
+      value: -44.53
       objectReference: {fileID: 0}
     - target: {fileID: 4000010071470574, guid: 54b4c632869ac0a48a926619971ef654, type: 2}
       propertyPath: m_LocalRotation.x
@@ -6172,7 +6172,7 @@ Prefab:
         type: 2}
       propertyPath: activeDoorFrame
       value: 
-      objectReference: {fileID: 1756740822}
+      objectReference: {fileID: 1124794717}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d02fdf1664ca1f479833b6a35a680cd, type: 2}
   m_IsPrefabParent: 0
