@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Torches = 2;
+		Torches = 0;
 		TorchCapacity = 10;
 		TorchCount = GameObject.Find("TorchCount");
 		TorchCount.GetComponent<Text>().text = Torches.ToString()+ "/" + TorchCapacity;
