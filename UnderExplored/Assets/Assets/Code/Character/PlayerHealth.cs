@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int startingHealth = 100;                            // The amount of health the player starts the game with.
     public int currentHealth;
-	private Color blackScreen = new Color(0f,0f,0f,1f);                                   // The current health the player has.
+    private Color blackScreen = new Color(0f, 0f, 0f, 1f);                                   // The current health the player has.
     //public GameObject playerRoot;
     //public Slider healthSlider;                                 // Reference to the UI's health bar.
     //public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
@@ -23,7 +23,8 @@ public class PlayerHealth : MonoBehaviour
     //PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
     bool isDead;                                                // Whether the player is dead.
     bool damaged;                                               // True when the player gets damaged.
-	private Image fadeToBlack;
+    private Image fadeToBlack;
+    private GameObject roomManager;
 
     void Awake()
     {
@@ -32,14 +33,18 @@ public class PlayerHealth : MonoBehaviour
         //playerAudio = GetComponent <AudioSource> ();
         //playerMovement = GetComponent <PlayerMovement> ();
         //playerShooting = GetComponentInChildren <PlayerShooting> ();
+        roomManager = GameObject.Find("RoomManager");
 
         // Set the initial health of the player.
         currentHealth = startingHealth;
-		fadeToBlack = GameObject.Find("BlackPanel").GetComponent<Image>();
-		fadeToBlack.color = blackScreen;
-		fadeToBlack.CrossFadeColor(Color.clear, 0.5f, false, true);
+        fadeToBlack = GameObject.Find("BlackPanel").GetComponent<Image>();
+        fadeToBlack.color = blackScreen;
+        //fadeToBlack.CrossFadeColor(Color.clear, 0.5f, false, true);
     }
 
+    void Start(){
+        spawn();
+    }
 
     void Update()
     {
@@ -101,17 +106,35 @@ public class PlayerHealth : MonoBehaviour
 
         // Turn off the movement and shooting scripts.
         this.GetComponent<RigidbodyFirstPersonController>().enabled = false;
-		this.GetComponent<CapsuleCollider>().enabled = false;
-		this.GetComponent<Rigidbody>().isKinematic = true;
+        this.GetComponent<CapsuleCollider>().enabled = false;
+        this.GetComponent<Rigidbody>().isKinematic = true;
         //playerShooting.enabled = false;
-		fadeToBlack.color = Color.black;
-		fadeToBlack.CrossFadeColor(Color.black, 3f, false, true);
+        fadeToBlack.color = Color.black;
+        fadeToBlack.CrossFadeColor(Color.black, 3f, false, true);
 
-		StartCoroutine(respawn());
+        StartCoroutine(respawn());
     }
 
-	private IEnumerator respawn(){
-		yield return new WaitForSeconds(4f);
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	}
+    private void spawn()
+    {
+        roomManager.GetComponent<Checkpoints>().loadInventory();
+        roomManager.GetComponent<Checkpoints>().loadCheckpoint();
+        fadeToBlack.CrossFadeColor(Color.clear, 0.5f, false, true);
+    }
+
+    private IEnumerator respawn()
+    {
+        yield return new WaitForSeconds(4f);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        roomManager.GetComponent<RoomManager>().handleCheckpoint();
+        roomManager.GetComponent<Checkpoints>().loadInventory();
+        roomManager.GetComponent<Checkpoints>().loadCheckpoint();
+        
+        fadeToBlack.CrossFadeColor(Color.clear, 0.5f, false, true);
+        this.GetComponent<RigidbodyFirstPersonController>().enabled = true;
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        this.GetComponent<Rigidbody>().isKinematic = false;
+        currentHealth = startingHealth;
+        isDead = false;
+    }
 }

@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     public LayerMask wallMask;
     public float rayRange;
     public int abilityEquipped;
+    public GameObject playerTorch;
 
     //Private Variables
     private static GameObject torchModel; //torch model to be instantiated
@@ -57,6 +58,7 @@ public class InputController : MonoBehaviour
         actionItems = 1 << LayerMask.NameToLayer("Action_Items");
         torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
         force = 600;
+        //playerTorch.SetActive(false);
 
         //UI assignments
         actionString = "Press 'E'";
@@ -99,6 +101,9 @@ public class InputController : MonoBehaviour
         //cast highlight ray
         if (abilityEquipped == 1)
         {
+            if(torches == 0){
+                playerTorch.SetActive(false);
+            }
             TorchHighlight();
         }
 
@@ -129,6 +134,9 @@ public class InputController : MonoBehaviour
                 if (instantiateTorch())
                 {
                     this.GetComponent<Inventory>().removeTorches(1);
+                    if(this.GetComponent<Inventory>().getTorches() == 0){
+                        playerTorch.SetActive(false);
+                    }
                 }
             }
             else if (Input.GetMouseButtonDown(0) && hitTorch != null)
@@ -137,6 +145,7 @@ public class InputController : MonoBehaviour
                 {
                     this.GetComponent<Inventory>().addTorches(1);
                     hitTorch.GetComponent<Torch>().destroyT();
+                    playerTorch.SetActive(true);
                 }
                 else if (!inPopCoroutine)
                 {
@@ -165,10 +174,12 @@ public class InputController : MonoBehaviour
             else if (Input.GetMouseButtonUp(0) && isCharging == true) //Casts orb spell if the player hasn't cancelled
             {
                 bool badcast;
-                if(heightWidth > 400){
+                if (heightWidth > 400)
+                {
                     badcast = false;
                 }
-                else{
+                else
+                {
                     badcast = true;
                 }
                 orbInstantiate.instantiateOrb(instantiateLocation, instantateDirection, force, badcast);
@@ -241,6 +252,7 @@ public class InputController : MonoBehaviour
                         this.GetComponent<Inventory>()
                         .addTorches(hit.transform.gameObject.GetComponent<TorchSource>().
                         takeTorches(this.GetComponent<Inventory>().torchesNeeded()));
+                        playerTorch.SetActive(true);
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)
                     {
@@ -292,6 +304,10 @@ public class InputController : MonoBehaviour
             OrbReticleUI.SetActive(false);
             TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
             OrbUI.GetComponent<Image>().sprite = OrbUISprite;
+            if (torches > 0)
+            {
+                playerTorch.SetActive(true);
+            }
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
@@ -301,6 +317,7 @@ public class InputController : MonoBehaviour
             OrbUI.GetComponent<Image>().sprite = OrbUISelectedSprite;
             OrbReticleUI.SetActive(true);
             OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
+            playerTorch.SetActive(false);
         }
     }
 

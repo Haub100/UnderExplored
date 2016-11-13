@@ -7,14 +7,11 @@ public class Ghost : MonoBehaviour
     Transform player;
     NavMeshAgent nav;
     Transform destination;
-	GameObject RoomManager;
 
     void Awake()
     {
         destination = player = GameObject.Find("Player").transform;
         nav = GetComponent<NavMeshAgent>();
-		RoomManager = GameObject.Find("RoomManager");
-        RoomManager.GetComponent<RoomManager>().addDestroyObject(this.gameObject);
     }
 
     // Use this for initialization

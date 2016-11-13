@@ -93,9 +93,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012462402856}
   - 95: {fileID: 95000012887903806}
-  - 65: {fileID: 65000011324966294}
   m_Layer: 11
-  m_Name: Torch01
+  m_Name: PlayerTorch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010030600876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.88, y: 3.8, z: 22.8}
+  m_LocalPosition: {x: 7.88, y: 1.78, z: 24.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -25.5}
   m_Children:
@@ -256,18 +255,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &65000011324966294
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013971263708}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.21, y: 0.27, z: 0.21}
-  m_Center: {x: 0, y: 0.97, z: -0.32}
 --- !u!81 &81000011952079180
 AudioListener:
   m_ObjectHideFlags: 1
@@ -360,6 +347,7 @@ MonoBehaviour:
     m_Bits: 256
   rayRange: 0
   abilityEquipped: 0
+  playerTorch: {fileID: 1000013971263708}
 --- !u!114 &114000011061677630
 MonoBehaviour:
   m_ObjectHideFlags: 1

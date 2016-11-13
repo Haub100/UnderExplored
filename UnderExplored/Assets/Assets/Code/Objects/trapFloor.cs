@@ -22,7 +22,7 @@ public class trapFloor : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("Player") && !isCrumbled){
-			Debug.Log("Trig Enter");
+			//Debug.Log("Trig Enter");
 			isCrumbled = true;
 			crumbleAnimation.SetBool("isCrumbled", true);
 		}
