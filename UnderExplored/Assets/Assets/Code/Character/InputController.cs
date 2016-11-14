@@ -17,7 +17,7 @@ public class InputController : MonoBehaviour
     private LayerMask actionItems; //all objects that can be used with the action 'E' key
     private Ray actionRay; //Ray that comes out from the middle of the player camera
     private RaycastHit hit;
-    private Vector3 torchSize = new Vector3(4f, 2f, 4f);
+    private Vector3 torchSize = new Vector3(1f, 1f, 1f);
     private Vector3 instantiateLocation; //the location a spell is instantiated
     private Vector3 instantateDirection; //the direction a spell travels when cast
     private bool isCharging = false; //used for charging abilities
@@ -26,6 +26,7 @@ public class InputController : MonoBehaviour
     private float heightWidth; //determines the width and the height of the orb reticle
     private int torches;
     private float countdown; //countdown timer used for UI cooldowns
+    private Animator torchAnimator;
 
     //Variables for UI interaction
     private Text actionUIText;
@@ -58,6 +59,7 @@ public class InputController : MonoBehaviour
         actionItems = 1 << LayerMask.NameToLayer("Action_Items");
         torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
         force = 600;
+        torchAnimator = playerTorch.GetComponent<Animator>();
         //playerTorch.SetActive(false);
 
         //UI assignments
@@ -135,6 +137,7 @@ public class InputController : MonoBehaviour
                 if (instantiateTorch())
                 {
                     this.GetComponent<Inventory>().removeTorches(1);
+                    torchAnimator.SetTrigger("torchPlace");
                     if (this.GetComponent<Inventory>().getTorches() == 0)
                     {
                         playerTorch.SetActive(false);
@@ -201,6 +204,10 @@ public class InputController : MonoBehaviour
                 GreenZoneUI.SetActive(false);
                 OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
             }
+        }
+
+        if (Input.GetMouseButtonUp(0)){
+            torchAnimator.SetTrigger("mouseUp");
         }
 
     }
