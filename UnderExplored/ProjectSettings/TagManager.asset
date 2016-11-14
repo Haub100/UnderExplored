@@ -9,6 +9,8 @@ TagManager:
   - Node
   - NodeManager
   - TorchSource
+  - Enemy
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

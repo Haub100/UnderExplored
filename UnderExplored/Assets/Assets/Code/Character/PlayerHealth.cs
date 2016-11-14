@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
     private Image fadeToBlack;
     private GameObject roomManager;
 
+
     void Awake()
     {
         // Setting up the references.
@@ -65,6 +66,10 @@ public class PlayerHealth : MonoBehaviour
         damaged = false;
     }
 
+
+    public bool getIsDead(){
+        return isDead;
+    }
 
     public void TakeDamage(int amount)
     {

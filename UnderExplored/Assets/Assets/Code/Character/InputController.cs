@@ -101,7 +101,8 @@ public class InputController : MonoBehaviour
         //cast highlight ray
         if (abilityEquipped == 1)
         {
-            if(torches == 0){
+            if (torches == 0)
+            {
                 playerTorch.SetActive(false);
             }
             TorchHighlight();
@@ -134,7 +135,8 @@ public class InputController : MonoBehaviour
                 if (instantiateTorch())
                 {
                     this.GetComponent<Inventory>().removeTorches(1);
-                    if(this.GetComponent<Inventory>().getTorches() == 0){
+                    if (this.GetComponent<Inventory>().getTorches() == 0)
+                    {
                         playerTorch.SetActive(false);
                     }
                 }
@@ -252,7 +254,10 @@ public class InputController : MonoBehaviour
                         this.GetComponent<Inventory>()
                         .addTorches(hit.transform.gameObject.GetComponent<TorchSource>().
                         takeTorches(this.GetComponent<Inventory>().torchesNeeded()));
-                        playerTorch.SetActive(true);
+                        if (abilityEquipped == 1)
+                        {
+                            playerTorch.SetActive(true);
+                        }
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)
                     {
