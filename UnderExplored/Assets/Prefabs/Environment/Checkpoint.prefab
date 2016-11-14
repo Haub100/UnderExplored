@@ -9,58 +9,58 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000013578757842}
+  m_RootGameObject: {fileID: 1000011209032802}
   m_IsPrefabParent: 1
---- !u!1 &1000013578757842
+--- !u!1 &1000011209032802
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000013697550484}
-  - 114: {fileID: 114000013355123486}
-  - 114: {fileID: 114000012359844150}
+  - 4: {fileID: 4000014072576946}
+  - 65: {fileID: 65000013042694108}
+  - 114: {fileID: 114000013435356744}
   m_Layer: 0
-  m_Name: RoomManager
-  m_TagString: Untagged
+  m_Name: Checkpoint
+  m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000013697550484
+--- !u!4 &4000014072576946
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013578757842}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1000011209032802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.13, y: 2.91, z: 5.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000012359844150
+--- !u!65 &65000013042694108
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011209032802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.86, y: 4.17, z: 10.06}
+  m_Center: {x: -0.5, y: 0, z: 0}
+--- !u!114 &114000013435356744
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013578757842}
+  m_GameObject: {fileID: 1000011209032802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b719a5e194c7ff149bbd9fc35555d9df, type: 3}
+  m_Script: {fileID: 11500000, guid: 90d2686162743d3418fde496fc2511af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000013355123486
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013578757842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ef073a587d463c4fb396fc10eaede3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeDoorFrame: {fileID: 0}

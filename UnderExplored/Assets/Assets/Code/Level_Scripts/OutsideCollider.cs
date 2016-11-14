@@ -19,6 +19,11 @@ public class OutsideCollider : MonoBehaviour
 
     }
 
+    public void setIsDespawned(bool isDespanwed)
+    {
+        isdespawned = isDespanwed;
+    }
+
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Player") && !isdespawned)

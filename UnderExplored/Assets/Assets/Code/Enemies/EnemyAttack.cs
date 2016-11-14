@@ -70,6 +70,9 @@ public class EnemyAttack : MonoBehaviour
             //anim.SetTrigger ("PlayerDead");
 			thisGhost.SetDestination(this.transform);
         }
+        else{
+            thisGhost.SetDestination(player.transform);
+        }
     }
 
 
