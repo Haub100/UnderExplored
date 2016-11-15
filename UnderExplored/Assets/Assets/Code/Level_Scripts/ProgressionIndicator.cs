@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 public class ProgressionIndicator : MonoBehaviour
 {
 
@@ -21,7 +22,7 @@ public class ProgressionIndicator : MonoBehaviour
     {
         active = (Material)Resources.Load("Materials/ProgressionActive", typeof(Material));
         inactive = (Material)Resources.Load("Materials/ProgressionInactive", typeof(Material));
-        totalNodeCount = objectWithNController.GetComponent<NodeController>().Nodes.Count;
+        
         totalPDots = progressionDots.Count;
         isProgressed = false;
     }
@@ -29,13 +30,20 @@ public class ProgressionIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        totalNodeCount = objectWithNController.GetComponent<NodeController>().Nodes.Count;
         litCount = objectWithNController.GetComponent<NodeController>().getLitCount();
         updateProgression();
     }
 
-	public bool getIsProgressed(){
-		return isProgressed;
-	}
+    public void setObjectWithNController(GameObject ObjWithNController)
+    {
+        objectWithNController = ObjWithNController;
+    }
+
+    public bool getIsProgressed()
+    {
+        return isProgressed;
+    }
 
     private void updateProgression()
     {
@@ -49,13 +57,27 @@ public class ProgressionIndicator : MonoBehaviour
         {
             while (i < dotLight)
             {
-                progressionDots[i].GetComponent<Renderer>().material = active;
+                if (progressionDots[i].CompareTag("UI_Prog"))
+                {
+                    progressionDots[i].SetActive(false);
+                }
+                else
+                {
+                    progressionDots[i].GetComponent<Renderer>().material = active;
+                }
                 i++;
             }
         }
         while (i < totalPDots)
         {
-            progressionDots[i].GetComponent<Renderer>().material = inactive;
+            if (progressionDots[i].CompareTag("UI_Prog"))
+            {
+                progressionDots[i].SetActive(true);
+            }
+            else
+            {
+                progressionDots[i].GetComponent<Renderer>().material = inactive;
+            }
             i++;
         }
 
@@ -65,7 +87,7 @@ public class ProgressionIndicator : MonoBehaviour
         }
         else
         {
-			isProgressed = false;
+            isProgressed = false;
         }
     }
 }

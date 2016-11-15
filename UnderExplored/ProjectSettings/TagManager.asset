@@ -11,6 +11,7 @@ TagManager:
   - TorchSource
   - Enemy
   - Checkpoint
+  - UI_Prog
   layers:
   - Default
   - TransparentFX
