@@ -7,21 +7,32 @@ public class Torch : MonoBehaviour
 
     private static GameObject silhouetteShaderHolder;
     private static GameObject normalTorchShaderHolder;
+    //private GameObject RoomManager;
+    private GameObject thisTorch;
 
     [SerializeField]
     List<GameObject> nodes; // List of all nodes the torch affects
 
-    void Awake(){
+    void Awake()
+    {
         silhouetteShaderHolder = (GameObject)Resources.Load("SilhouetteShaderHolder", typeof(GameObject));
         normalTorchShaderHolder = (GameObject)Resources.Load("NormalTorchShaderHolder", typeof(GameObject));
-        
+        //RoomManager = GameObject.Find("RoomManager");
+        //thisTorch = this.gameObject;
+    }
+    void Start()
+    {
+        //RoomManager.GetComponent<RoomManager>().addDestroyObject(thisTorch);
     }
 
     // When the torch is detroyed it first subtracts its lit percentage from each node it affects based on its position relative to the node
     public void destroyT()
     {
-        if(nodes.Count > 0){
-            foreach(GameObject node in nodes){
+        //RoomManager.GetComponent<RoomManager>().removeDestroyObject(this.gameObject);
+        if (nodes.Count > 0)
+        {
+            foreach (GameObject node in nodes)
+            {
                 node.GetComponent<LightNode>().litPercentageDecrease(this.transform.position);
             }
         }
@@ -33,7 +44,7 @@ public class Torch : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(actionRay, out hit, rayRange))
+        if (Physics.Raycast(actionRay, out hit, rayRange, 1 << LayerMask.NameToLayer("LightSource")))
         {
             if (hit.transform.gameObject.tag == "Torch")
             {
@@ -51,6 +62,11 @@ public class Torch : MonoBehaviour
                 hitTorch = null;
             }
         }
+        else if (hitTorch != null)
+        {
+            hitTorch.GetComponent<Renderer>().material.shader = normalTorchShaderHolder.GetComponent<Renderer>().sharedMaterial.shader;
+            hitTorch = null;
+        }
         return null;
     }
 
@@ -59,6 +75,7 @@ public class Torch : MonoBehaviour
         if (col.gameObject.CompareTag("Node"))
         {
             nodes.Add(col.gameObject);
+            col.gameObject.GetComponent<LightNode>().litPercentageIncrease(this.transform.position);
         }
     }
 }

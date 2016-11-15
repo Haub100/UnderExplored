@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class LightNode : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class LightNode : MonoBehaviour
 
     private float closeDistance;
     private float mediumDistance;
+    private int ghostSpawnings;
 
     // Use this for initialization
 
@@ -18,15 +18,16 @@ public class LightNode : MonoBehaviour
         isLit = false;
         litPercentage = 0;
         closeDistance = 30;
+        ghostSpawnings = 0;
     }
 
     // When a torch enters into the node's detection area or if the torch pops back up again.
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Torch"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
-            print("Torch Detected in Node Area");
-            litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
+            print("LightSource Detected in Node Area");
+            //litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
         }
     }
 
@@ -34,11 +35,18 @@ public class LightNode : MonoBehaviour
     // Issue: If the torch is setInactive it won't be removed.
     void OnTriggerExit(Collider col)
     {
-        if (col.gameObject.CompareTag("Torch"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
-            print("Torch Removed From Node Area");
-            litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
+            print("LightSource Removed From Node Area");
+            //litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
         }
+    }
+
+    public int getGhostSpawnings(){
+        return ghostSpawnings;   
+    }
+    public void incrementGhostSpawnings(){
+        ghostSpawnings += 1;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,6 +124,11 @@ public class LightNode : MonoBehaviour
         {
             litPercentage -= 35;
         }
+
+        if (litPercentage < 0)
+        {
+            litPercentage = 0;
+        }
         conditionsCheck();
     }
 
@@ -138,6 +151,11 @@ public class LightNode : MonoBehaviour
         }
 
         litPercentage -= modifier;
+
+        if (litPercentage < 0)
+        {
+            litPercentage = 0;
+        }
         conditionsCheck();
     }
 }

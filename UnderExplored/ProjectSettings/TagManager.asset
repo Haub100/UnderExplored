@@ -9,6 +9,9 @@ TagManager:
   - Node
   - NodeManager
   - TorchSource
+  - Enemy
+  - Checkpoint
+  - UI_Prog
   layers:
   - Default
   - TransparentFX
@@ -20,10 +23,10 @@ TagManager:
   - 
   - Wall
   - Action_Items
-  - 
-  - 
-  - 
-  - 
+  - LightSource
+  - Player
+  - EnemyWall
+  - Enemy
   - 
   - 
   - 
