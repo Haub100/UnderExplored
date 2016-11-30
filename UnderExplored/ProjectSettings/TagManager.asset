@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Checkpoint
   - UI_Prog
+  - OrbUnlock
   layers:
   - Default
   - TransparentFX

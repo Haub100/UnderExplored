@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class InputController : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class InputController : MonoBehaviour
     private int torches;
     private float countdown; //countdown timer used for UI cooldowns
     private Animator torchAnimator;
+    private List<bool> activatedAbilities = new List<bool>(); //Holds a list of which abilities are activated or not
 
     //Variables for UI interaction
     private Text actionUIText;
@@ -87,6 +89,10 @@ public class InputController : MonoBehaviour
         actionIcon = GameObject.Find("Interact Icon");
         actionIcon.SetActive(false);
         OrbTimer.SetActive(false);
+
+        activatedAbilities.Add(true);
+        activatedAbilities.Add(false);
+        ActiveCheck();
     }
 
     // Update is called once per frame
@@ -206,7 +212,8 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0)){
+        if (Input.GetMouseButtonUp(0))
+        {
             torchAnimator.SetTrigger("mouseUp");
         }
 
@@ -237,6 +244,29 @@ public class InputController : MonoBehaviour
             return true;
         }
     }
+
+    private void OrbCooldown()
+    {
+        countdown -= Time.deltaTime;
+        if (countdown <= 0)
+        {
+            inCooldown = false;
+            OrbTimer.SetActive(false);
+            if (abilityEquipped == 1)
+            {
+                OrbUI.GetComponent<Image>().sprite = OrbUISprite;
+            }
+            else if (abilityEquipped == 2)
+            {
+                OrbUI.GetComponent<Image>().sprite = OrbUISelectedSprite;
+            }
+        }
+        OrbTimerText.text = Mathf.Round(countdown).ToString();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //          Action Items (e button)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void eButton()
     {
@@ -276,6 +306,22 @@ public class InputController : MonoBehaviour
                     }
                 }
             }
+            else if(hit.transform.gameObject.tag == "OrbUnlock")
+            {
+                if(!activatedAbilities[1]){
+                    actionUIText.text = "Press 'E' to GAIN ABILITY: Light Orb";
+                }
+                else{
+                    actionUIText.text = "";
+                    actionIcon.SetActive(false);
+                }
+
+                if(Input.GetKeyDown(KeyCode.E))
+                {
+                    activatedAbilities[1] = true;
+                    ActiveCheck();
+                }
+            }
         }
         else
         {
@@ -285,28 +331,13 @@ public class InputController : MonoBehaviour
         }
     }
 
-    private void OrbCooldown()
-    {
-        countdown -= Time.deltaTime;
-        if (countdown <= 0)
-        {
-            inCooldown = false;
-            OrbTimer.SetActive(false);
-            if (abilityEquipped == 1)
-            {
-                OrbUI.GetComponent<Image>().sprite = OrbUISprite;
-            }
-            else if (abilityEquipped == 2)
-            {
-                OrbUI.GetComponent<Image>().sprite = OrbUISelectedSprite;
-            }
-        }
-        OrbTimerText.text = Mathf.Round(countdown).ToString();
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //          Abilities Active Check and Swapping
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void AbilitySwap()
     {
-        if (Input.GetKeyUp(KeyCode.Alpha1))
+        if (Input.GetKeyUp(KeyCode.Alpha1) && activatedAbilities[0])
         {
             abilityEquipped = 1;
             rayRange = 3;
@@ -321,7 +352,7 @@ public class InputController : MonoBehaviour
                 playerTorch.SetActive(true);
             }
         }
-        else if (Input.GetKeyUp(KeyCode.Alpha2))
+        else if (Input.GetKeyUp(KeyCode.Alpha2) && activatedAbilities[1])
         {
             abilityEquipped = 2;
             CrosshairUI.SetActive(false);
@@ -330,6 +361,22 @@ public class InputController : MonoBehaviour
             OrbReticleUI.SetActive(true);
             OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
             playerTorch.SetActive(false);
+        }
+    }
+
+    //Handles showing or removing UI for active/inactive abilities
+    public void ActiveCheck()
+    {
+        for (int x = 0; x < activatedAbilities.Count; x++)
+        {
+            if (!activatedAbilities[x] && x == 1)
+            {
+                OrbUI.SetActive(false);
+            }
+            else
+            {
+                OrbUI.SetActive(true);
+            }
         }
     }
 
