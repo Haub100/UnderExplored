@@ -68,8 +68,9 @@ GameObject:
   - 198: {fileID: 198000011481985980}
   - 199: {fileID: 199000013487934482}
   - 114: {fileID: 114000012097838424}
-  m_Layer: 0
-  m_Name: small_fire
+  - 114: {fileID: 114000012854590958}
+  m_Layer: 14
+  m_Name: Player_small_fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,8 +474,8 @@ Light:
   serializedVersion: 7
   m_Type: 2
   m_Color: {r: 0.9882353, g: 0.6, b: 0.003921569, a: 1}
-  m_Intensity: 2
-  m_Range: 10
+  m_Intensity: 1
+  m_Range: 6
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -494,7 +495,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!114 &114000010778341692
@@ -707,6 +708,19 @@ MonoBehaviour:
   blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
   brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
     type: 3}
+--- !u!114 &114000012854590958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010664858010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7657412dfd467548a075c355d024158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tf: {fileID: 2100000, guid: cdc3aaded395d4f4dbd1e90e394ddc15, type: 2}
+  tf2: {fileID: 2100000, guid: 29edf909e8728a749ab22fc20cc10df5, type: 2}
 --- !u!114 &114000012997422780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6043,7 +6057,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 29edf909e8728a749ab22fc20cc10df5, type: 2}
+  - {fileID: 2100000, guid: cdc3aaded395d4f4dbd1e90e394ddc15, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
