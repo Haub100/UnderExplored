@@ -15,6 +15,7 @@ public class InputController : MonoBehaviour
     //Private Variables
     private static GameObject torchModel; //torch model to be instantiated
     private GameObject hitTorch; //torch that is highlighted if no highlight it is null
+    private GameObject roomManager; //room manager that controls the level
     private LayerMask actionItems; //all objects that can be used with the action 'E' key
     private Ray actionRay; //Ray that comes out from the middle of the player camera
     private RaycastHit hit;
@@ -62,6 +63,7 @@ public class InputController : MonoBehaviour
         torchModel = (GameObject)Resources.Load("Torch_Fire", typeof(GameObject));
         force = 600;
         torchAnimator = playerTorch.GetComponent<Animator>();
+        roomManager = GameObject.Find("RoomManager");
         //playerTorch.SetActive(false);
 
         //UI assignments
@@ -320,6 +322,15 @@ public class InputController : MonoBehaviour
                 {
                     activatedAbilities[1] = true;
                     ActiveCheck();
+                }
+            }
+            else if(hit.transform.gameObject.tag == "EndGame")
+            {
+                actionUIText.text = "Press 'E' to set status to: Explored";
+
+                if(Input.GetKeyDown(KeyCode.E))
+                {
+                    roomManager.GetComponent<RoomManager>().endDungeon();
                 }
             }
         }

@@ -37,6 +37,15 @@ public class OutsideCollider : MonoBehaviour
             {
                 RoomManager.GetComponent<RoomManager>().setActiveDoor(nextDoorFrame);
                 progressionHud.GetComponent<ProgressionIndicator>().setObjectWithNController(nextDoorFrame);
+
+                if (this.GetComponentInParent<NodeController>().getIsFullyLit())
+                {
+                    RoomManager.GetComponent<RoomManager>().addPoints(10);
+                }
+                else
+                {
+                    RoomManager.GetComponentInParent<RoomManager>().addPoints(5);
+                }
             }
         }
     }

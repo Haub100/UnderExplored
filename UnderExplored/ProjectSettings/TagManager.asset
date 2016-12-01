@@ -13,6 +13,7 @@ TagManager:
   - Checkpoint
   - UI_Prog
   - OrbUnlock
+  - EndGame
   layers:
   - Default
   - TransparentFX
