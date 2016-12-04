@@ -8,7 +8,9 @@ public class ProgressionIndicator : MonoBehaviour
 
     public GameObject objectWithNController; //An Object with a node controller
     public List<GameObject> progressionDots;
+    public GameObject finalDot;
 
+    private float percentToProgress;
     private Material inactive;
     private Material active;
     private int totalNodeCount;
@@ -22,9 +24,10 @@ public class ProgressionIndicator : MonoBehaviour
     {
         active = (Material)Resources.Load("Materials/ProgressionActive", typeof(Material));
         inactive = (Material)Resources.Load("Materials/ProgressionInactive", typeof(Material));
-        
+
         totalPDots = progressionDots.Count;
         isProgressed = false;
+
     }
 
     // Update is called once per frame
@@ -32,6 +35,7 @@ public class ProgressionIndicator : MonoBehaviour
     {
         totalNodeCount = objectWithNController.GetComponent<NodeController>().Nodes.Count;
         litCount = objectWithNController.GetComponent<NodeController>().getLitCount();
+        percentToProgress = objectWithNController.GetComponent<NodeController>().getPercentToProgress();
         updateProgression();
     }
 
@@ -47,10 +51,20 @@ public class ProgressionIndicator : MonoBehaviour
 
     private void updateProgression()
     {
-        decimal percentageNodesLit = decimal.Divide(litCount, totalNodeCount);
+        decimal decimalPercent = decimal.Parse(percentToProgress.ToString()); //needed because we need to convert the float to a decimal in order to divide
+        decimal nodesToLight = (totalNodeCount * decimalPercent);
+        decimal percentageNodesLit = decimal.Divide(litCount, nodesToLight);
+
+        //This prevents an out of range exception
+        if (percentageNodesLit > 1)
+        {
+            percentageNodesLit = 1;
+        }
+
         double dotsDouble = (double)(totalPDots * percentageNodesLit);
         double dotsToLight = Math.Round(dotsDouble, 0, MidpointRounding.AwayFromZero);
         int dotLight = (int)dotsToLight;
+
 
         int i = 0;
         if (dotLight > 0)
@@ -79,6 +93,30 @@ public class ProgressionIndicator : MonoBehaviour
                 progressionDots[i].GetComponent<Renderer>().material = inactive;
             }
             i++;
+        }
+
+        //If a room is fully lit we light up the final dot in the progression indicator
+        if (objectWithNController.GetComponent<NodeController>().getIsFullyLit())
+        {
+            if (finalDot.CompareTag("UI_Prog"))
+            {
+                finalDot.SetActive(false);
+            }
+            else
+            {
+                finalDot.GetComponent<Renderer>().material = active;
+            }
+        }
+        else
+        {
+            if (finalDot.CompareTag("UI_Prog"))
+            {
+                finalDot.SetActive(true);
+            }
+            else
+            {
+                finalDot.GetComponent<Renderer>().material = inactive;
+            }
         }
 
         if (dotLight == 10)

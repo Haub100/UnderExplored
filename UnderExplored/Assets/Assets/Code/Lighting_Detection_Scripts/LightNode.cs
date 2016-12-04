@@ -26,8 +26,37 @@ public class LightNode : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
-            print("LightSource Detected in Node Area");
+            //print("LightSource Detected in Node Area");
             //litPercentageIncrease(col.gameObject.GetComponent<Transform>().position);
+        }
+
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player") && !isLit)
+        {
+            colorIndicator childComponent = col.gameObject.GetComponentInChildren(typeof(colorIndicator), true) as colorIndicator;
+            if (childComponent != null)
+            {
+                childComponent.setTorchFireMaterial(2);
+            }
+        }
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player") && !isLit)
+        {
+            colorIndicator childComponent = col.gameObject.GetComponentInChildren(typeof(colorIndicator), true) as colorIndicator;
+            if (childComponent != null)
+            {
+                childComponent.setTorchFireMaterial(2);
+            }
+        }
+        else
+        {
+            colorIndicator childComponent = col.gameObject.GetComponentInChildren(typeof(colorIndicator), true) as colorIndicator;
+            if (childComponent != null)
+            {
+                childComponent.setTorchFireMaterial(1);
+            }
         }
     }
 
@@ -37,15 +66,26 @@ public class LightNode : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("LightSource"))
         {
-            print("LightSource Removed From Node Area");
+            //print("LightSource Removed From Node Area");
             //litPercentageDecrease(col.gameObject.GetComponent<Transform>().position);
+        }
+
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            colorIndicator childComponent = col.gameObject.GetComponentInChildren(typeof(colorIndicator), true) as colorIndicator;
+            if (childComponent != null)
+            {
+                childComponent.setTorchFireMaterial(1);
+            }
         }
     }
 
-    public int getGhostSpawnings(){
-        return ghostSpawnings;   
+    public int getGhostSpawnings()
+    {
+        return ghostSpawnings;
     }
-    public void incrementGhostSpawnings(){
+    public void incrementGhostSpawnings()
+    {
         ghostSpawnings += 1;
     }
 
