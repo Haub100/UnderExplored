@@ -48,6 +48,7 @@ public class InputController : MonoBehaviour
     private Sprite OrbUIGreyscaleSprite;
     private Sprite TorchUISprite;
     private Sprite TorchUISelectedSprite;
+    private Sprite TorchUIGreyscaleSprite;
     private string actionString;
     private bool inPopCoroutine = false;
 
@@ -83,6 +84,7 @@ public class InputController : MonoBehaviour
         OrbUIGreyscaleSprite = (Sprite)Resources.Load("Textures/OrbUIGrey", typeof(Sprite));
         TorchUISprite = (Sprite)Resources.Load("Textures/TorchUI", typeof(Sprite));
         TorchUISelectedSprite = (Sprite)Resources.Load("Textures/TorchUISelected", typeof(Sprite));
+        TorchUIGreyscaleSprite = (Sprite)Resources.Load("Textures/TorchUIGrey", typeof(Sprite));
         TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
         OrbUI.GetComponent<Image>().sprite = OrbUISprite;
         OrbReticleUI.SetActive(false);
@@ -144,11 +146,19 @@ public class InputController : MonoBehaviour
             {
                 if (instantiateTorch())
                 {
-                    this.GetComponent<Inventory>().removeTorches(1);
-                    torchAnimator.SetTrigger("torchPlace");
+                    if (this.GetComponent<Inventory>().getTorches() > 0)
+                    {
+                        this.GetComponent<Inventory>().removeTorches(1);
+                    }
+
                     if (this.GetComponent<Inventory>().getTorches() == 0)
                     {
+                        TorchUI.GetComponent<Image>().sprite = TorchUIGreyscaleSprite;
                         playerTorch.SetActive(false);
+                    }
+                    else
+                    {
+                        torchAnimator.SetTrigger("torchPlace");
                     }
                 }
             }
@@ -159,6 +169,7 @@ public class InputController : MonoBehaviour
                     this.GetComponent<Inventory>().addTorches(1);
                     hitTorch.GetComponent<Torch>().destroyT();
                     playerTorch.SetActive(true);
+                    TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
                 }
                 else if (!inPopCoroutine)
                 {
@@ -216,9 +227,11 @@ public class InputController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            torchAnimator.SetTrigger("mouseUp");
+            if (torchAnimator.isActiveAndEnabled)
+            {
+                torchAnimator.SetTrigger("mouseUp");
+            }
         }
-
     }
 
     private bool instantiateTorch()
@@ -295,7 +308,12 @@ public class InputController : MonoBehaviour
                         takeTorches(this.GetComponent<Inventory>().torchesNeeded()));
                         if (abilityEquipped == 1)
                         {
+                            TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
                             playerTorch.SetActive(true);
+                        }
+                        else
+                        {
+                            TorchUI.GetComponent<Image>().sprite = TorchUISprite;
                         }
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)
@@ -308,27 +326,29 @@ public class InputController : MonoBehaviour
                     }
                 }
             }
-            else if(hit.transform.gameObject.tag == "OrbUnlock")
+            else if (hit.transform.gameObject.tag == "OrbUnlock")
             {
-                if(!activatedAbilities[1]){
+                if (!activatedAbilities[1])
+                {
                     actionUIText.text = "Press 'E' to GAIN ABILITY: Light Orb";
                 }
-                else{
+                else
+                {
                     actionUIText.text = "";
                     actionIcon.SetActive(false);
                 }
 
-                if(Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     activatedAbilities[1] = true;
                     ActiveCheck();
                 }
             }
-            else if(hit.transform.gameObject.tag == "EndGame")
+            else if (hit.transform.gameObject.tag == "EndGame")
             {
                 actionUIText.text = "Press 'E' to set status to: Explored";
 
-                if(Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     roomManager.GetComponent<RoomManager>().endDungeon();
                 }
@@ -356,11 +376,19 @@ public class InputController : MonoBehaviour
             CrosshairUI.SetActive(true);
             GreenZoneUI.SetActive(false);
             OrbReticleUI.SetActive(false);
-            TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
             OrbUI.GetComponent<Image>().sprite = OrbUISprite;
             if (torches > 0)
             {
                 playerTorch.SetActive(true);
+            }
+
+            if (this.GetComponent<Inventory>().getTorches() == 0)
+            {
+                TorchUI.GetComponent<Image>().sprite = TorchUIGreyscaleSprite;
+            }
+            else
+            {
+                TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
             }
         }
         else if (Input.GetKeyUp(KeyCode.Alpha2) && activatedAbilities[1])
@@ -372,6 +400,15 @@ public class InputController : MonoBehaviour
             OrbReticleUI.SetActive(true);
             OrbReticleUI.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
             playerTorch.SetActive(false);
+
+            if (this.GetComponent<Inventory>().getTorches() == 0)
+            {
+                TorchUI.GetComponent<Image>().sprite = TorchUIGreyscaleSprite;
+            }
+            else
+            {
+                TorchUI.GetComponent<Image>().sprite = TorchUISprite;
+            }
         }
     }
 
