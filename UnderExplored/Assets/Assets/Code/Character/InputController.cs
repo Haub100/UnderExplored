@@ -11,6 +11,8 @@ public class InputController : MonoBehaviour
     public float rayRange;
     public int abilityEquipped;
     public GameObject playerTorch;
+    public AudioClip torchLightSFX;
+    public AudioClip torchDouseSFX;
 
     //Private Variables
     private static GameObject torchModel; //torch model to be instantiated
@@ -30,6 +32,8 @@ public class InputController : MonoBehaviour
     private float countdown; //countdown timer used for UI cooldowns
     private Animator torchAnimator;
     private List<bool> activatedAbilities = new List<bool>(); //Holds a list of which abilities are activated or not
+    private AudioSource oneShotSFX; //Sound Effects that occur once and are done (torchlight, torchdouse)
+    private AudioSource constantSounds; //Sounds that play consistently (walking)
 
     //Variables for UI interaction
     private Text actionUIText;
@@ -97,6 +101,12 @@ public class InputController : MonoBehaviour
         activatedAbilities.Add(true);
         activatedAbilities.Add(false);
         ActiveCheck();
+
+        //Sound Setup
+        AudioSource[] temp = GetComponents<AudioSource>();
+        oneShotSFX = temp[0];
+        constantSounds = temp[1];
+
     }
 
     // Update is called once per frame
@@ -149,6 +159,7 @@ public class InputController : MonoBehaviour
                     if (this.GetComponent<Inventory>().getTorches() > 0)
                     {
                         this.GetComponent<Inventory>().removeTorches(1);
+                        oneShotSFX.PlayOneShot(torchLightSFX);
                     }
 
                     if (this.GetComponent<Inventory>().getTorches() == 0)
@@ -170,6 +181,7 @@ public class InputController : MonoBehaviour
                     hitTorch.GetComponent<Torch>().destroyT();
                     playerTorch.SetActive(true);
                     TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
+                    oneShotSFX.PlayOneShot(torchDouseSFX);
                 }
                 else if (!inPopCoroutine)
                 {
