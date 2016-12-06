@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000013697550484}
   - 114: {fileID: 114000013355123486}
   - 114: {fileID: 114000012359844150}
+  - 114: {fileID: 114000010082445326}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -41,6 +42,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010082445326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013578757842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46dcf95e44c1d045a5c39ca5c229b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012359844150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63,4 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef073a587d463c4fb396fc10eaede3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minPointsForGoodEnding: 0
+  minPointsForOkayEnding: 0
   activeDoorFrame: {fileID: 0}

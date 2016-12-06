@@ -18,7 +18,14 @@ public class OutsideCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!this.GetComponentInParent<NodeController>().getIsLitEnough())
+        {
+            //playerBlock.SetActive(true);
+        }
+        else
+        {
+            //playerBlock.SetActive(false);
+        }
     }
 
     public void setIsDespawned(bool isDespanwed)
@@ -37,15 +44,20 @@ public class OutsideCollider : MonoBehaviour
             {
                 RoomManager.GetComponent<RoomManager>().setActiveDoor(nextDoorFrame);
                 progressionHud.GetComponent<ProgressionIndicator>().setObjectWithNController(nextDoorFrame);
+            }
 
-                if (this.GetComponentInParent<NodeController>().getIsFullyLit())
-                {
-                    RoomManager.GetComponent<RoomManager>().addPoints(10);
-                }
-                else
-                {
-                    RoomManager.GetComponentInParent<RoomManager>().addPoints(5);
-                }
+            //Add the door frame to the room manager's door frame's since last checkpoint
+            //This will allow the room manager to reset the isDespanwed boolean
+            RoomManager.GetComponent<RoomManager>().addDoorFrameSinceCheckpoint(this.transform.parent.gameObject);
+
+            //adds the proper points to the room manager
+            if (this.GetComponentInParent<NodeController>().getIsFullyLit())
+            {
+                RoomManager.GetComponent<RoomManager>().addPoints(10);
+            }
+            else
+            {
+                RoomManager.GetComponentInParent<RoomManager>().addPoints(5);
             }
         }
     }

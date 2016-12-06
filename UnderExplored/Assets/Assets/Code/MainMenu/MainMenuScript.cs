@@ -16,7 +16,8 @@ public class MainMenuScript : MonoBehaviour {
 
     public void loadLevelID(int levelNumberHere)
     {
-        SceneManager.LoadScene(levelNumberHere);
+        GameObject.Find("GameManager").GetComponent<GameManager>().setStartingLevel(levelNumberHere-1);
+        SceneManager.LoadScene(1);
     }
 
     public void quitGame()

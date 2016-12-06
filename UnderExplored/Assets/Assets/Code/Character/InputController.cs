@@ -127,6 +127,10 @@ public class InputController : MonoBehaviour
             {
                 playerTorch.SetActive(false);
             }
+            else
+            {
+                playerTorch.SetActive(true);
+            }
             TorchHighlight();
         }
 

@@ -23,6 +23,7 @@ GameObject:
   - 23: {fileID: 23000012176812230}
   - 65: {fileID: 65000010544092490}
   - 114: {fileID: 114000011998912136}
+  - 65: {fileID: 65000013472749428}
   m_Layer: 10
   m_Name: torch01
   m_TagString: Torch
@@ -228,7 +229,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013820773356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 773.91504, y: 615.6778, z: -799.68036}
+  m_LocalPosition: {x: -19.021528, y: 19.76158, z: 97.755905}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -348,6 +349,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.039083753, y: 0.021000467, z: 0.039105497}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65000013472749428
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010116151046}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.11, y: 0.0070047, z: 0.039105497}
+  m_Center: {x: 0.04, y: -0.004, z: 0}
 --- !u!82 &82000012407509010
 AudioSource:
   m_ObjectHideFlags: 1
