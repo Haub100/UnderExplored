@@ -15,7 +15,7 @@ public class PauseMenuHandling : MonoBehaviour {
         isShowing = false;
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         //Cursor.SetCursor(cursorTexture);
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
         
         
@@ -34,6 +34,7 @@ public class PauseMenuHandling : MonoBehaviour {
         pauseMenu.SetActive(isShowing);
         if (isShowing)
         {
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             Time.timeScale = 0.0f;
             
@@ -42,6 +43,7 @@ public class PauseMenuHandling : MonoBehaviour {
             
         if (!isShowing)
         {
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             Time.timeScale = 1.0f;
             
