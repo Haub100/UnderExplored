@@ -14,6 +14,8 @@ TagManager:
   - UI_Prog
   - OrbUnlock
   - EndGame
+  - PlayerTorch
+  - FireChandelier
   layers:
   - Default
   - TransparentFX
@@ -30,7 +32,7 @@ TagManager:
   - EnemyWall
   - Enemy
   - PlayerSmallFire
-  - 
+  - PlayerTorch
   - 
   - 
   - 

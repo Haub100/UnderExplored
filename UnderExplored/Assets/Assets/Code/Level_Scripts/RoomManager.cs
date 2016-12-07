@@ -13,6 +13,7 @@ public class RoomManager : MonoBehaviour
     private List<GameObject> doorFramesSinceCheckpoint; //holds all of the doorFrames the player has passed through since the last checkpoint
     private List<int> torchCountDefaults;
     private int points; // used to keep track of how many points the player has towards various dungeon endings
+    private GameObject[] fireChandeliers;
 
     //private List<GameObject> destroyableObjects;
 
@@ -23,6 +24,7 @@ public class RoomManager : MonoBehaviour
         activeDoorFrame = GetComponent<Checkpoints>().getCheckpoint().getNextDoorFrame();
         previousDoorFrame = activeDoorFrame;
         torchSources = GameObject.FindGameObjectsWithTag("TorchSource");
+        fireChandeliers = GameObject.FindGameObjectsWithTag("FireChandelier");
         torchCountDefaults = new List<int>();
         doorFramesSinceCheckpoint = new List<GameObject>();
         createTorchCountDefaults();
@@ -81,6 +83,7 @@ public class RoomManager : MonoBehaviour
         resetTorchSources();
         resetDoorFrames();
         resetPoints();
+        extinguishChandeliers();
     }
 
     public void despawnObjects()
@@ -143,6 +146,17 @@ public class RoomManager : MonoBehaviour
     public void resetDoorFramesSinceLastCheckpoint()
     {
         doorFramesSinceCheckpoint = new List<GameObject>();
+    }
+
+    private void extinguishChandeliers()
+    {
+        if (fireChandeliers.Length > 0)
+        {
+            foreach (GameObject fireChandelier in fireChandeliers)
+            {
+                fireChandelier.GetComponent<fireChandelier>().Extinguish();
+            }
+        }
     }
 
     //=============================================================================================

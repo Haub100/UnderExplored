@@ -50,7 +50,7 @@ public class LightNode : MonoBehaviour
                 childComponent.setTorchFireMaterial(2);
             }
         }
-        else
+        else if(col.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             colorIndicator childComponent = col.gameObject.GetComponentInChildren(typeof(colorIndicator), true) as colorIndicator;
             if (childComponent != null)
