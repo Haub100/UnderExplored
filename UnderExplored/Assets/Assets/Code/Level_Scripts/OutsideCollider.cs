@@ -20,11 +20,11 @@ public class OutsideCollider : MonoBehaviour
     {
         if (!this.GetComponentInParent<NodeController>().getIsLitEnough())
         {
-            //playerBlock.SetActive(true);
+            playerBlock.SetActive(true);
         }
         else
         {
-            //playerBlock.SetActive(false);
+            playerBlock.SetActive(false);
         }
     }
 
