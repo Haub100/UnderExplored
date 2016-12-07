@@ -169,15 +169,15 @@ public class RoomManager : MonoBehaviour
     {
         if (points >= minPointsForGoodEnding)
         {
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene(2);
         }
         else if (points >= minPointsForOkayEnding)
         {
-            SceneManager.LoadScene(5);
+            SceneManager.LoadScene(3);
         }
         else
         {
-            SceneManager.LoadScene(6);
+            SceneManager.LoadScene(4);
         }
     }
 }
