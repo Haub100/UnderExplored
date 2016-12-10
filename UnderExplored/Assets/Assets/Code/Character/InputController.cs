@@ -331,6 +331,7 @@ public class InputController : MonoBehaviour
                         {
                             TorchUI.GetComponent<Image>().sprite = TorchUISprite;
                         }
+                        hit.transform.gameObject.GetComponent<Animator>().SetTrigger("OpenChest");
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)
                     {
