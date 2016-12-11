@@ -12771,6 +12771,11 @@ Prefab:
       propertyPath: m_FootstepSounds.Array.data[3]
       value: 
       objectReference: {fileID: 8300000, guid: e9714160ce34f2b4ab63ff8c27bd68e1, type: 3}
+    - target: {fileID: 82000010208839418, guid: 54b4c632869ac0a48a926619971ef654,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54b4c632869ac0a48a926619971ef654, type: 2}
   m_IsPrefabParent: 0
@@ -22540,7 +22545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa16ee98cfcc4b4e98bf86bbccdbd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCheckpoint: 2
+  startingCheckpoint: 0
 --- !u!1 &1395601495
 GameObject:
   m_ObjectHideFlags: 0
