@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -8,6 +9,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof(CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
+        [SerializeField]
+        private float m_StepInterval;
+        [SerializeField]
+        private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
+        [SerializeField]
+        private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
+        [SerializeField]
+        private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+
         [Serializable]
         public class MovementSettings
         {
@@ -91,6 +101,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
         private Vector3 atJumpTransformFWD; //holds the transform when the player jumps
         private Vector3 atJumpTransformRHT;
+        private AudioSource m_AudioSource;
+        private float m_StepCycle;
+        private float m_NextStep;
 
 
         public Vector3 Velocity
@@ -127,6 +140,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init(transform, cam.transform);
             atJumpTransformFWD = this.transform.forward;
+            m_AudioSource = GetComponent<AudioSource>();
+            m_StepCycle = 0f;
+            m_NextStep = m_StepCycle/2f;
+            m_StepInterval = 2f;
         }
 
 
@@ -176,6 +193,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
                 }
+                
+                ProgressStepCycle(0f);
             }
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl && !m_IsGrounded))
@@ -204,6 +223,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
                     m_Jumping = true;
+                    PlayJumpSound();
                 }
 
                 if (!m_Jumping && Mathf.Abs(input.x) < float.Epsilon && Mathf.Abs(input.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
@@ -220,6 +240,46 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
             }
             m_Jump = false;
+        }
+
+        private void PlayJumpSound()
+        {
+            m_AudioSource.clip = m_JumpSound;
+            m_AudioSource.Play();
+        }
+
+        private void ProgressStepCycle(float speed)
+        {
+            if (m_RigidBody.velocity.sqrMagnitude > 0 && (GetInput().x != 0 || GetInput().y != 0))
+            {
+                m_StepCycle += (m_RigidBody.velocity.magnitude + (speed*(!Running ? 1f : 1.2f)))*
+                             Time.fixedDeltaTime;
+            }
+
+            if (!(m_StepCycle > m_NextStep))
+            {
+                return;
+            }
+
+            m_NextStep = m_StepCycle + m_StepInterval;
+
+            PlayFootStepAudio();
+        }
+
+        private void PlayFootStepAudio()
+        {
+            if (!m_IsGrounded)
+            {
+                return;
+            }
+            // pick & play a random footstep sound from the array,
+            // excluding sound at index 0
+            int n = Random.Range(1, m_FootstepSounds.Length);
+            m_AudioSource.clip = m_FootstepSounds[n];
+            m_AudioSource.PlayOneShot(m_AudioSource.clip);
+            // move picked sound to index 0 so it's not picked next time
+            m_FootstepSounds[n] = m_FootstepSounds[0];
+            m_FootstepSounds[0] = m_AudioSource.clip;
         }
 
 
@@ -304,6 +364,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (!m_PreviouslyGrounded && m_IsGrounded && m_Jumping)
             {
                 m_Jumping = false;
+                m_AudioSource.clip = m_LandSound;
+                m_AudioSource.Play();
+                m_NextStep = m_StepCycle + .5f;
             }
         }
     }

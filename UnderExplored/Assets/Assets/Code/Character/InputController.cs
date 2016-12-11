@@ -11,8 +11,6 @@ public class InputController : MonoBehaviour
     public float rayRange;
     public int abilityEquipped;
     public GameObject playerTorch;
-    public AudioClip torchLightSFX;
-    public AudioClip torchDouseSFX;
 
     //Private Variables
     private static GameObject torchModel; //torch model to be instantiated
@@ -56,6 +54,12 @@ public class InputController : MonoBehaviour
     private string actionString;
     private bool inPopCoroutine = false;
 
+    //Sound
+    [SerializeField]
+    private AudioClip torchPlace;
+    [SerializeField]
+    private AudioClip torchDouse; 
+    private AudioSource audioSource; 
 
     // Use this for initialization
     void Start()
@@ -102,11 +106,8 @@ public class InputController : MonoBehaviour
         activatedAbilities.Add(false);
         ActiveCheck();
 
-        //Sound Setup
-        AudioSource[] temp = GetComponents<AudioSource>();
-        oneShotSFX = temp[0];
-        constantSounds = temp[1];
-
+        //Sound
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -163,7 +164,8 @@ public class InputController : MonoBehaviour
                     if (this.GetComponent<Inventory>().getTorches() > 0)
                     {
                         this.GetComponent<Inventory>().removeTorches(1);
-                        oneShotSFX.PlayOneShot(torchLightSFX);
+                        audioSource.clip = torchPlace;
+                        audioSource.Play();
                     }
 
                     if (this.GetComponent<Inventory>().getTorches() == 0)
@@ -185,7 +187,9 @@ public class InputController : MonoBehaviour
                     hitTorch.GetComponent<Torch>().destroyT();
                     playerTorch.SetActive(true);
                     TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
-                    oneShotSFX.PlayOneShot(torchDouseSFX);
+                    audioSource.clip = torchDouse;
+                    audioSource.Play();
+
                 }
                 else if (!inPopCoroutine)
                 {

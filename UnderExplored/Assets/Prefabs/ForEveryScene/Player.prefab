@@ -27,7 +27,6 @@ GameObject:
   - 95: {fileID: 95000011730014338}
   - 114: {fileID: 114000013859889752}
   - 82: {fileID: 82000010208839418}
-  - 82: {fileID: 82000010152925172}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -175,6 +174,7 @@ GameObject:
   - 95: {fileID: 95000012887903806}
   - 65: {fileID: 65000014012114718}
   - 54: {fileID: 54000011555284336}
+  - 82: {fileID: 82000012884531722}
   m_Layer: 0
   m_Name: PlayerTorch
   m_TagString: PlayerTorch
@@ -427,7 +427,7 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010245445362}
   m_Enabled: 1
---- !u!82 &82000010152925172
+--- !u!82 &82000010208839418
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -501,20 +501,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!82 &82000010208839418
+--- !u!82 &82000012884531722
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010030600876}
+  m_GameObject: {fileID: 1000013971263708}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 04719d3cf69bcb640ad6853104504b8f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.203
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -740,8 +740,8 @@ MonoBehaviour:
   rayRange: 0
   abilityEquipped: 0
   playerTorch: {fileID: 1000013971263708}
-  torchLightSFX: {fileID: 0}
-  torchDouseSFX: {fileID: 0}
+  torchPlace: {fileID: 8300000, guid: 2647b134fb7f3ef4f8a509a372823fd9, type: 3}
+  torchDouse: {fileID: 8300000, guid: 0f2607b8736b4544bb96b19b0799368d, type: 3}
 --- !u!114 &114000011061677630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -948,12 +948,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c9795a96c094f4cbde4d65546aa9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StepInterval: 0
+  m_FootstepSounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
+  m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   cam: {fileID: 20000012993301340}
   movementSettings:
     ForwardSpeed: 6
     BackwardSpeed: 6
     StrafeSpeed: 3
-    RunMultiplier: 2
+    RunMultiplier: 1.2
     RunKey: 304
     JumpForce: 75
     SlopeCurveModifier:
