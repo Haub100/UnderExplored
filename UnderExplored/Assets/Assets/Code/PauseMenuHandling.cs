@@ -24,7 +24,7 @@ public class PauseMenuHandling : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        if (Input.GetKeyDown(KeyCode.Escape))
             checkForMenu();
     }
 
