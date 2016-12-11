@@ -26,7 +26,7 @@ public class Orb : MonoBehaviour
         Physics.IgnoreLayerCollision(10, 11, true); //ignore player Collision
         Physics.IgnoreLayerCollision(10, 10, true); //ignore collision with itself
         Physics.IgnoreLayerCollision(10, 13, true); //ignore enemy collision
-        lifeTime = 5f;
+        lifeTime = 7f;
     }
 
     // Update is called once per frame

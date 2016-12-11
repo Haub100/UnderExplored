@@ -229,7 +229,7 @@ public class InputController : MonoBehaviour
                 inCooldown = true;
                 isCharging = false;
                 OrbTimer.SetActive(true);
-                countdown = 5f;
+                countdown = 7f;
             }
 
             //Cancels the charging process
@@ -359,6 +359,19 @@ public class InputController : MonoBehaviour
                 {
                     activatedAbilities[1] = true;
                     ActiveCheck();
+                }
+            }
+            else if (hit.transform.gameObject.tag == "ThiefGhost")
+            {
+
+                actionUIText.text = "Press 'E' to give torches";
+
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    this.gameObject.GetComponent<Inventory>().setTorches(0);
+                    TorchUI.GetComponent<Image>().sprite = TorchUIGreyscaleSprite;
+                    playerTorch.SetActive(false);
                 }
             }
             else if (hit.transform.gameObject.tag == "EndGame")

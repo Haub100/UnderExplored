@@ -16,6 +16,7 @@ TagManager:
   - EndGame
   - PlayerTorch
   - FireChandelier
+  - ThiefGhost
   layers:
   - Default
   - TransparentFX
