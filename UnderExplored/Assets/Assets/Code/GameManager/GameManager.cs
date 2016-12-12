@@ -6,12 +6,14 @@ public class GameManager : MonoBehaviour
     public static GameManager GM;
 
     private int startingLevel;
+    private bool openHelpOverlay;
 
     void Awake()
     {
         MakeThisTheOnlyGameManager();
         DontDestroyOnLoad(transform.gameObject);
         startingLevel = 0;
+        openHelpOverlay = true;
     }
 
     void MakeThisTheOnlyGameManager()
@@ -51,5 +53,15 @@ public class GameManager : MonoBehaviour
     public int getStartingLevel()
     {
         return startingLevel;
+    }
+
+    public void setOpenHelpOverlay(bool needHelp)
+    {
+        openHelpOverlay = needHelp;
+    }
+
+    public bool getOpenHelpOverlay()
+    {
+        return openHelpOverlay;
     }
 }

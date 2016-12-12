@@ -16,6 +16,7 @@ public class InputController : MonoBehaviour
     private static GameObject torchModel; //torch model to be instantiated
     private GameObject hitTorch; //torch that is highlighted if no highlight it is null
     private GameObject roomManager; //room manager that controls the level
+    private GameObject gameManager;
     private LayerMask actionItems; //all objects that can be used with the action 'E' key
     private Ray actionRay; //Ray that comes out from the middle of the player camera
     private RaycastHit hit;
@@ -73,6 +74,7 @@ public class InputController : MonoBehaviour
         force = 600;
         torchAnimator = playerTorch.GetComponent<Animator>();
         roomManager = GameObject.Find("RoomManager");
+        gameManager = GameObject.Find("GameManager");
         //playerTorch.SetActive(false);
 
         //UI assignments
@@ -336,6 +338,12 @@ public class InputController : MonoBehaviour
                             TorchUI.GetComponent<Image>().sprite = TorchUISprite;
                         }
                         hit.transform.gameObject.GetComponent<Animator>().SetTrigger("OpenChest");
+
+                        if(gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
+                        {
+                            roomManager.GetComponent<HelpOverlay>().setPanelsActive();
+                            gameManager.GetComponent<GameManager>().setOpenHelpOverlay(false);
+                        }
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)
                     {
@@ -376,6 +384,18 @@ public class InputController : MonoBehaviour
                     this.gameObject.GetComponent<Inventory>().setTorches(0);
                     TorchUI.GetComponent<Image>().sprite = TorchUIGreyscaleSprite;
                     playerTorch.SetActive(false);
+                }
+            }
+            else if (hit.transform.gameObject.tag == "EvilLever")
+            {
+
+                actionUIText.text = "Press 'E' to be evil";
+
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    hit.transform.gameObject.GetComponent<evilChoice_Fire>().activate();
+                    roomManager.GetComponent<RoomManager>().addPoints(-100);
                 }
             }
             else if (hit.transform.gameObject.tag == "EndGame")

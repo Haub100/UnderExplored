@@ -17,6 +17,7 @@ TagManager:
   - PlayerTorch
   - FireChandelier
   - ThiefGhost
+  - EvilLever
   layers:
   - Default
   - TransparentFX
