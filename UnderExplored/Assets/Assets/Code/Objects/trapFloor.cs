@@ -8,6 +8,8 @@ public class trapFloor : MonoBehaviour
     bool isCrumbled = false;
     private GameObject player;
     private GameObject trapCollider;
+    private AudioSource audioSource;
+    public AudioClip crumble;
 
     // Use this for initialization
     void Start()
@@ -15,6 +17,7 @@ public class trapFloor : MonoBehaviour
         crumbleAnimation = GetComponent<Animator>();
         player = GameObject.Find("Player");
         trapCollider = GameObject.Find("TrapFloorCollider");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -42,6 +45,9 @@ public class trapFloor : MonoBehaviour
             Vector3 downVector = trapCollider.transform.position;
             downVector.y = -16f;
             trapCollider.transform.position = downVector;
+            // Play Sound
+            audioSource.clip = crumble;
+            audioSource.Play();
         }
     }
 }
