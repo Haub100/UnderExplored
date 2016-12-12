@@ -42,6 +42,7 @@ public class Inventory : MonoBehaviour
     public void setTorches(int torches)
     {
         Torches = torches;
+        TorchCount.GetComponent<Text>().text = Torches.ToString() + "/" + TorchCapacity;
     }
 
     public int getTorches()

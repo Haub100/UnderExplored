@@ -10,6 +10,7 @@ public class NodeController : MonoBehaviour {
 	public float percentToProgress;
 	Animator animator;
 	private bool isFullyLit;
+	private bool isLitEnough;
 	private int litCount;
 
 	// Use this for initialization
@@ -25,6 +26,11 @@ public class NodeController : MonoBehaviour {
 	public bool getIsFullyLit(){
 		return isFullyLit;
 	}
+
+	public bool getIsLitEnough(){
+		return isLitEnough;
+	}
+
 	public int getLitCount(){
 		return litCount;
 	}
@@ -49,6 +55,7 @@ public class NodeController : MonoBehaviour {
 		if (count == Nodes.Count){
 			animator.SetBool("isOpen", true);
 			isFullyLit = true;
+			isLitEnough = true;
 			litCount = count;
 			return true;
 		}
@@ -56,11 +63,13 @@ public class NodeController : MonoBehaviour {
 			animator.SetBool("isOpen", true);
 			litCount = count;
 			isFullyLit = false;
+			isLitEnough = true;
 			return true;
 		}
 		else{
 			animator.SetBool("isOpen", false);
 			isFullyLit = false;
+			isLitEnough = false;
 		}
 		litCount = count;
 		return false;

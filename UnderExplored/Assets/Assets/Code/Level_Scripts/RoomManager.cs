@@ -10,8 +10,10 @@ public class RoomManager : MonoBehaviour
     public GameObject activeDoorFrame; //doorframe the player is currently trying to get through
     private GameObject previousDoorFrame; //holds on to the previous doorframe for checkpoint usage
     private GameObject[] torchSources; //holds all of the torchSources in the level
+    private List<GameObject> doorFramesSinceCheckpoint; //holds all of the doorFrames the player has passed through since the last checkpoint
     private List<int> torchCountDefaults;
     private int points; // used to keep track of how many points the player has towards various dungeon endings
+    private GameObject[] fireChandeliers;
 
     //private List<GameObject> destroyableObjects;
 
@@ -19,17 +21,25 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         Physics.IgnoreLayerCollision(12, 11, true);
+        activeDoorFrame = GetComponent<Checkpoints>().getCheckpoint().getNextDoorFrame();
         previousDoorFrame = activeDoorFrame;
         torchSources = GameObject.FindGameObjectsWithTag("TorchSource");
+        fireChandeliers = GameObject.FindGameObjectsWithTag("FireChandelier");
         torchCountDefaults = new List<int>();
+        doorFramesSinceCheckpoint = new List<GameObject>();
         createTorchCountDefaults();
-        points = 0;
+        points = GetComponent<Checkpoints>().getCheckpoint().getPoints();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(points);
+    }
 
+    public void addDoorFrameSinceCheckpoint(GameObject doorFrame)
+    {
+        doorFramesSinceCheckpoint.Add(doorFrame);
     }
 
     public void setActiveDoor(GameObject doorFrame)
@@ -71,7 +81,9 @@ public class RoomManager : MonoBehaviour
     {
         despawnObjects();
         resetTorchSources();
-        resetPreviousDoorFrame();
+        resetDoorFrames();
+        resetPoints();
+        extinguishChandeliers();
     }
 
     public void despawnObjects()
@@ -97,7 +109,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void resetTorchSources()
+    private void resetTorchSources()
     {
         if (torchSources.Length > 0)
         {
@@ -108,11 +120,43 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void resetPreviousDoorFrame()
+    private void resetDoorFrames()
     {
-        previousDoorFrame.GetComponentInChildren<OutsideCollider>().setIsDespawned(false);
-        previousDoorFrame.GetComponentInChildren<OutsideCollider>().playerBlock.SetActive(false);
+        previousDoorFrame = GetComponent<Checkpoints>().getCheckpoint().getNextDoorFrame();
+        //previousDoorFrame.GetComponentInChildren<OutsideCollider>().setIsDespawned(false);
+        //previousDoorFrame.GetComponentInChildren<OutsideCollider>().playerBlock.SetActive(false);
+        if (doorFramesSinceCheckpoint.Count > 0)
+        {
+            foreach (GameObject doorFrame in doorFramesSinceCheckpoint)
+            {
+                doorFrame.GetComponentInChildren<OutsideCollider>().setIsDespawned(false);
+                doorFrame.GetComponentInChildren<OutsideCollider>().playerBlock.SetActive(false);
+            }
+        }
+        resetDoorFramesSinceLastCheckpoint();
         activeDoorFrame = previousDoorFrame;
+    }
+
+    private void resetPoints()
+    {
+        setPoints(this.GetComponent<Checkpoints>().getCheckpoint().getPoints());
+    }
+
+    //To be used after door frames are reset or after a checkpoint is reached
+    public void resetDoorFramesSinceLastCheckpoint()
+    {
+        doorFramesSinceCheckpoint = new List<GameObject>();
+    }
+
+    private void extinguishChandeliers()
+    {
+        if (fireChandeliers.Length > 0)
+        {
+            foreach (GameObject fireChandelier in fireChandeliers)
+            {
+                fireChandelier.GetComponent<fireChandelier>().Extinguish();
+            }
+        }
     }
 
     //=============================================================================================
@@ -139,15 +183,15 @@ public class RoomManager : MonoBehaviour
     {
         if (points >= minPointsForGoodEnding)
         {
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene(2);
         }
         else if (points >= minPointsForOkayEnding)
         {
-            SceneManager.LoadScene(5);
+            SceneManager.LoadScene(3);
         }
         else
         {
-            SceneManager.LoadScene(6);
+            SceneManager.LoadScene(4);
         }
     }
 }

@@ -5,6 +5,8 @@ public class TorchSource : MonoBehaviour
 {
 
     public int torchCount; //number of torches available in the source
+    public bool isChest;
+
 
     // Use this for initialization
     void Start()

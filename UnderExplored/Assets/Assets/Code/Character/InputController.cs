@@ -11,8 +11,6 @@ public class InputController : MonoBehaviour
     public float rayRange;
     public int abilityEquipped;
     public GameObject playerTorch;
-    public AudioClip torchLightSFX;
-    public AudioClip torchDouseSFX;
 
     //Private Variables
     private static GameObject torchModel; //torch model to be instantiated
@@ -56,6 +54,12 @@ public class InputController : MonoBehaviour
     private string actionString;
     private bool inPopCoroutine = false;
 
+    //Sound
+    [SerializeField]
+    private AudioClip torchPlace;
+    [SerializeField]
+    private AudioClip torchDouse; 
+    private AudioSource audioSource; 
 
     // Use this for initialization
     void Start()
@@ -102,11 +106,8 @@ public class InputController : MonoBehaviour
         activatedAbilities.Add(false);
         ActiveCheck();
 
-        //Sound Setup
-        AudioSource[] temp = GetComponents<AudioSource>();
-        oneShotSFX = temp[0];
-        constantSounds = temp[1];
-
+        //Sound
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -126,6 +127,10 @@ public class InputController : MonoBehaviour
             if (torches == 0)
             {
                 playerTorch.SetActive(false);
+            }
+            else
+            {
+                playerTorch.SetActive(true);
             }
             TorchHighlight();
         }
@@ -159,7 +164,8 @@ public class InputController : MonoBehaviour
                     if (this.GetComponent<Inventory>().getTorches() > 0)
                     {
                         this.GetComponent<Inventory>().removeTorches(1);
-                        oneShotSFX.PlayOneShot(torchLightSFX);
+                        audioSource.clip = torchPlace;
+                        audioSource.Play();
                     }
 
                     if (this.GetComponent<Inventory>().getTorches() == 0)
@@ -181,7 +187,9 @@ public class InputController : MonoBehaviour
                     hitTorch.GetComponent<Torch>().destroyT();
                     playerTorch.SetActive(true);
                     TorchUI.GetComponent<Image>().sprite = TorchUISelectedSprite;
-                    oneShotSFX.PlayOneShot(torchDouseSFX);
+                    audioSource.clip = torchDouse;
+                    audioSource.Play();
+
                 }
                 else if (!inPopCoroutine)
                 {
@@ -225,7 +233,7 @@ public class InputController : MonoBehaviour
                 inCooldown = true;
                 isCharging = false;
                 OrbTimer.SetActive(true);
-                countdown = 5f;
+                countdown = 7f;
             }
 
             //Cancels the charging process
@@ -327,6 +335,7 @@ public class InputController : MonoBehaviour
                         {
                             TorchUI.GetComponent<Image>().sprite = TorchUISprite;
                         }
+                        hit.transform.gameObject.GetComponent<Animator>().SetTrigger("OpenChest");
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)
                     {
@@ -354,6 +363,19 @@ public class InputController : MonoBehaviour
                 {
                     activatedAbilities[1] = true;
                     ActiveCheck();
+                }
+            }
+            else if (hit.transform.gameObject.tag == "ThiefGhost")
+            {
+
+                actionUIText.text = "Press 'E' to give torches";
+
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    this.gameObject.GetComponent<Inventory>().setTorches(0);
+                    TorchUI.GetComponent<Image>().sprite = TorchUIGreyscaleSprite;
+                    playerTorch.SetActive(false);
                 }
             }
             else if (hit.transform.gameObject.tag == "EndGame")
