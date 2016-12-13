@@ -40,7 +40,7 @@ GameObject:
   - 4: {fileID: 4000010534287342}
   - 198: {fileID: 198000010305144932}
   - 199: {fileID: 199000011414533400}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - 33: {fileID: 33000012545914428}
   - 135: {fileID: 135000013676093362}
   - 23: {fileID: 23000010204616620}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013491294480}
   - 108: {fileID: 108000013493584804}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point light (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - 33: {fileID: 33000012478562514}
   - 135: {fileID: 135000013594076636}
   - 23: {fileID: 23000010161163272}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - 33: {fileID: 33000012385191472}
   - 135: {fileID: 135000010104224924}
   - 23: {fileID: 23000011317769152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

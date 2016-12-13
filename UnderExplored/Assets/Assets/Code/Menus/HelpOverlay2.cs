@@ -20,8 +20,8 @@ public class HelpOverlay2 : MonoBehaviour
         progressionHelp = GameObject.Find("ProgressionHelp");
         pressKeyHelp = GameObject.Find("PressKeyHelp");
 
-        torchHelpText02.SetActive(false);
-        progressionHelp.SetActive(false);
+        //torchHelpText02.SetActive(false);
+        //progressionHelp.SetActive(false);
 		helpActivated = false;
     }
 

@@ -15,6 +15,7 @@ public class RoomManager : MonoBehaviour
     private int points; // used to keep track of how many points the player has towards various dungeon endings
     private GameObject[] fireChandeliers;
     private GameObject evilFireLever; //holds the gameObject with that initiates a firewall
+    private GameObject progressionHud;
 
     //private List<GameObject> destroyableObjects;
 
@@ -31,6 +32,7 @@ public class RoomManager : MonoBehaviour
         createTorchCountDefaults();
         points = GetComponent<Checkpoints>().getCheckpoint().getPoints();
         evilFireLever = GameObject.FindGameObjectWithTag("EvilLever");
+        progressionHud = GameObject.Find("ProgressionHUD");
     }
 
     // Update is called once per frame
@@ -144,6 +146,7 @@ public class RoomManager : MonoBehaviour
         }
         resetDoorFramesSinceLastCheckpoint();
         activeDoorFrame = previousDoorFrame;
+        progressionHud.GetComponent<ProgressionIndicator>().setObjectWithNController(activeDoorFrame);
     }
 
     private void resetPoints()

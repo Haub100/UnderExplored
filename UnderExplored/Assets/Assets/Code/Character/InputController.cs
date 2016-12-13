@@ -59,8 +59,8 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private AudioClip torchPlace;
     [SerializeField]
-    private AudioClip torchDouse; 
-    private AudioSource audioSource; 
+    private AudioClip torchDouse;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Start()
@@ -137,20 +137,25 @@ public class InputController : MonoBehaviour
             TorchHighlight();
         }
 
-        //E-button Raycast
-        eButton();
+
 
         //Cooldown for the orb ability
         if (inCooldown)
         {
             OrbCooldown();
         }
+        
+        if (Time.timeScale > 0.0f)
+        {
+            //E-button Raycast
+            eButton();
 
-        //check for mouse input
-        MouseButtonInput();
+            //check for mouse input
+            MouseButtonInput();
 
-        //check for AbilitySwap
-        AbilitySwap();
+            //check for AbilitySwap
+            AbilitySwap();
+        }
     }
 
     private void MouseButtonInput()
@@ -168,7 +173,7 @@ public class InputController : MonoBehaviour
                         this.GetComponent<Inventory>().removeTorches(1);
                         audioSource.clip = torchPlace;
                         audioSource.Play();
-                        if(gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
+                        if (gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
                         {
                             roomManager.GetComponent<HelpOverlay2>().setPanelsActive();
                             gameManager.GetComponent<GameManager>().setOpenHelpOverlay(false);
@@ -344,7 +349,7 @@ public class InputController : MonoBehaviour
                         }
                         hit.transform.gameObject.GetComponent<Animator>().SetTrigger("OpenChest");
 
-                        if(gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
+                        if (gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
                         {
                             roomManager.GetComponent<HelpOverlay>().setPanelsActive();
                             //gameManager.GetComponent<GameManager>().setOpenHelpOverlay(false);

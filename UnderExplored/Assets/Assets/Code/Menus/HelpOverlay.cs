@@ -8,8 +8,10 @@ public class HelpOverlay : MonoBehaviour
     private GameObject indicatorText;
     private GameObject abilityText;
     private GameObject torchHelpText;
-	private GameObject pressKeyHelp;
-	private bool helpActivated;
+    private GameObject progressionHelp;
+    private GameObject torchHelpText02;
+    private GameObject pressKeyHelp;
+    private bool helpActivated;
 
     // Use this for initialization
     void Start()
@@ -18,15 +20,19 @@ public class HelpOverlay : MonoBehaviour
         indicatorText = GameObject.Find("IndicatorText");
         abilityText = GameObject.Find("AbilityText");
         torchHelpText = GameObject.Find("TorchHelpText");
-		pressKeyHelp = GameObject.Find("PressKeyHelp");
-		
+        pressKeyHelp = GameObject.Find("PressKeyHelp");
+        torchHelpText02 = GameObject.Find("TorchHelpText02");
+        progressionHelp = GameObject.Find("ProgressionHelp");
+
 
         greyPanel.SetActive(false);
         indicatorText.SetActive(false);
         torchHelpText.SetActive(false);
         abilityText.SetActive(false);
-		pressKeyHelp.SetActive(false);
-		helpActivated = false;
+        pressKeyHelp.SetActive(false);
+        torchHelpText02.SetActive(false);
+        progressionHelp.SetActive(false);
+        helpActivated = false;
     }
 
     // Update is called once per frame
@@ -34,28 +40,30 @@ public class HelpOverlay : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Return) || (Input.GetKeyUp(KeyCode.H) && helpActivated))
         {
-			Time.timeScale = 1.0f;
+            Time.timeScale = 1.0f;
             greyPanel.SetActive(false);
             indicatorText.SetActive(false);
             torchHelpText.SetActive(false);
             abilityText.SetActive(false);
-			pressKeyHelp.SetActive(false);
-			helpActivated = false;
+            pressKeyHelp.SetActive(false);
+            torchHelpText02.SetActive(false);
+            progressionHelp.SetActive(false);
+            helpActivated = false;
         }
-		else if(Input.GetKeyUp(KeyCode.H))
-		{
-			setPanelsActive();
-		}
+        else if (Input.GetKeyUp(KeyCode.H))
+        {
+            setPanelsActive();
+        }
     }
 
     public void setPanelsActive()
     {
-		helpActivated = true;
+        helpActivated = true;
         greyPanel.SetActive(true);
         indicatorText.SetActive(true);
         torchHelpText.SetActive(true);
         abilityText.SetActive(true);
-		pressKeyHelp.SetActive(true);
-		Time.timeScale = 0.0f;
+        pressKeyHelp.SetActive(true);
+        Time.timeScale = 0.0f;
     }
 }
