@@ -26,7 +26,13 @@ public class Orb : MonoBehaviour
         Physics.IgnoreLayerCollision(10, 11, true); //ignore player Collision
         Physics.IgnoreLayerCollision(10, 10, true); //ignore collision with itself
         Physics.IgnoreLayerCollision(10, 13, true); //ignore enemy collision
-        lifeTime = 7f;
+        lifeTime = 15f;
+        GameObject orb = GameObject.FindGameObjectWithTag("Orb");
+        if (orb != null)
+        {
+            orb.GetComponent<Orb>().destroyO();
+        }
+        this.gameObject.tag = "Orb";
     }
 
     // Update is called once per frame
@@ -39,8 +45,8 @@ public class Orb : MonoBehaviour
         }
 
         //Waits until the orb comes to a complete stop before adding light percentage to the nodes
-        if (this.gameObject.GetComponent<Rigidbody>().velocity == Vector3.zero && 
-            this.gameObject.GetComponent<Rigidbody>().isKinematic == false && lifeTime < 5)
+        if (this.gameObject.GetComponent<Rigidbody>().velocity == Vector3.zero &&
+            this.gameObject.GetComponent<Rigidbody>().isKinematic == false && lifeTime < 15)
         {
             //Debug.Log(lifeTime);
             this.gameObject.GetComponent<Rigidbody>().isKinematic = true;

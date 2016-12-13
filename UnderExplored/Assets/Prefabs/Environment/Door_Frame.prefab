@@ -250,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000012744449782
 GameObject:
   m_ObjectHideFlags: 1
@@ -412,7 +412,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012449912424}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.0700002, z: 2.66}
+  m_LocalPosition: {x: 0, y: -1.0700002, z: 2.34}
   m_LocalScale: {x: 1.0000004, y: 0.99999994, z: 1.0000004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -463,10 +463,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012611098284}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06000042, y: 0.1500001, z: 29.51}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 13.9, y: 0.1500001, z: -131.37}
   m_LocalScale: {x: 1, y: 0.7756709, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
   - {fileID: 4000013750577152}
   - {fileID: 4000010136438910}
@@ -548,7 +548,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012686355934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.1, y: 2.76, z: 1.89}
+  m_LocalPosition: {x: 7.1, y: 2.76, z: 2.012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -768,7 +768,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 29e17e2262140824ca5ffcf7dac61763, type: 2}
+  - {fileID: 2100000, guid: 5e02f3a8af12a1a429df13e6773c4cb1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -1472,7 +1472,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1581,7 +1581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostSpawnLocations:
-  - {fileID: 0}
   - {fileID: 0}
 --- !u!114 &114000013602005234
 MonoBehaviour:

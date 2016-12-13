@@ -101,6 +101,12 @@ public class RoomManager : MonoBehaviour
             }
         }
 
+        GameObject orb = GameObject.FindGameObjectWithTag("Orb");
+        if (orb != null)
+        {
+            orb.GetComponent<Orb>().destroyO();
+        }
+
         // Destroy All Ghosts
         GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemyObjects.Length > 0)

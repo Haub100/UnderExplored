@@ -168,6 +168,11 @@ public class InputController : MonoBehaviour
                         this.GetComponent<Inventory>().removeTorches(1);
                         audioSource.clip = torchPlace;
                         audioSource.Play();
+                        if(gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
+                        {
+                            roomManager.GetComponent<HelpOverlay2>().setPanelsActive();
+                            gameManager.GetComponent<GameManager>().setOpenHelpOverlay(false);
+                        }
                     }
 
                     if (this.GetComponent<Inventory>().getTorches() == 0)
@@ -235,7 +240,7 @@ public class InputController : MonoBehaviour
                 inCooldown = true;
                 isCharging = false;
                 OrbTimer.SetActive(true);
-                countdown = 7f;
+                countdown = 5f;
             }
 
             //Cancels the charging process
@@ -342,7 +347,7 @@ public class InputController : MonoBehaviour
                         if(gameManager.GetComponent<GameManager>().getOpenHelpOverlay())
                         {
                             roomManager.GetComponent<HelpOverlay>().setPanelsActive();
-                            gameManager.GetComponent<GameManager>().setOpenHelpOverlay(false);
+                            //gameManager.GetComponent<GameManager>().setOpenHelpOverlay(false);
                         }
                     }
                     else if (this.GetComponent<Inventory>().torchesNeeded() > 0)

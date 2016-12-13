@@ -18,6 +18,7 @@ TagManager:
   - FireChandelier
   - ThiefGhost
   - EvilLever
+  - Orb
   layers:
   - Default
   - TransparentFX
